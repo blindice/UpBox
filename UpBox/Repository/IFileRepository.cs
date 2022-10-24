@@ -12,5 +12,13 @@ namespace UpBox.Repository
         IQueryable<tbl_file> GetAllFiles();
 
         IQueryable<tbl_file> GetByCondition(Expression<Func<tbl_file, bool>> expression);
+
+        void Create(tbl_file entity);
+
+        void Update(tbl_file entity);
+
+        void Delete(tbl_file entity);
+
+        Task SaveAsync();
     }
 }
