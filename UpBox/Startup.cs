@@ -23,7 +23,16 @@ namespace UpBox
         {
 
             services.AddControllersWithViews();
-
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "AllowOrigin",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000", "http://localhost:4200")
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod();
+                    });
+            });
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -59,6 +68,8 @@ namespace UpBox
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
+            app.UseCors("AllowOrigin");
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
@@ -74,7 +85,8 @@ namespace UpBox
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
+                    //spa.UseReactDevelopmentServer(npmScript: "start");
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:3000");
                 }
             });
         }
