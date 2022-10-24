@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using UpBox.Repository;
 
 namespace UpBox
 {
@@ -33,6 +34,10 @@ namespace UpBox
                                             .AllowAnyMethod();
                     });
             });
+
+            services.AddScoped<IFileRepository, FileRepository>();
+
+
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
