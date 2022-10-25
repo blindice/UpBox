@@ -11,6 +11,6 @@ namespace UpBox.DTO
 
         public bool IsDeleted { get; set; }
 
-        public int UpdatedBy { get; set; }
+        public int? UpdatedBy { get; set; }
     }
 }
