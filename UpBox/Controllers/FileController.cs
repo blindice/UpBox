@@ -40,11 +40,10 @@ namespace UpBox.Controllers
         }
 
         [HttpPost, DisableRequestSizeLimit]
-        public async Task<IActionResult> Upload([FromForm] IFormFile file)
+        public async Task<IActionResult> Upload([FromForm] FileUploadDTO file)
         {
 
-            if (file.Length > 0) await _svc.Upload(file);
-
+            if (file.File.Length > 0) await _svc.Upload(file);
 
             return Ok();
         }
