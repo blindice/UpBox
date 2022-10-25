@@ -42,32 +42,18 @@ namespace UpBox.Controllers
         [HttpPost, DisableRequestSizeLimit]
         public async Task<IActionResult> Upload([FromForm] IFormFile file)
         {
-            try
-            {
-                if (file.Length > 0) await _svc.Upload(file);
 
-                //var path = Path.Combine(Directory.GetCurrentDirectory(), "Files");
-                //var filepath = Path.Combine(path, Path.GetRandomFileName());
+            if (file.Length > 0) await _svc.Upload(file);
 
-                //if (!Directory.Exists(path))
-                //    return BadRequest();
 
-                //if (file.Length > 0)
-                //{
-                //    var filePath = Path.GetTempFileName();
+            return Ok();
+        }
 
-                //    using (var stream = System.IO.File.Create(filePath))
-                //    {
-                //        await file.CopyToAsync(stream);
-                //    }
-                //}
-
-                return Ok();
-            }catch(Exception ex)
-            {
-                return Ok(ex);
-
-            }
+        [HttpPost("{id}")]
+        public async Task<IActionResult> Delete(int? id, [FromBody] FileUpdateDTO file)
+        {
+            await _svc.DeleteFileAsync((int)id, file);
+            return Ok();
         }
     }
 }
