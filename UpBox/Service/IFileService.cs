@@ -21,5 +21,7 @@ namespace UpBox.Service
 
         Task Download();
 
+        Task DeleteFileAsync(int id, FileUpdateDTO file);
+
     }
 }

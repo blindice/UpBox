@@ -29,7 +29,7 @@ namespace UpBox.Service
 
         public async Task<List<FileDTO>> GetAllFilesAsync()
         {
-            var files = await _repo.GetAllFiles().ToListAsync();
+            var files = await _repo.GetAllFiles().OrderByDescending(f => f.LastEditedDate).ToListAsync();
             var fileDTO = _mapper.Map<List<FileDTO>>(files);
 
             return fileDTO;
@@ -37,7 +37,8 @@ namespace UpBox.Service
 
         public async Task<List<FileDTO>> GetFilesByNameAndFileTypeAsync(string fileName, int? fileType)
         {
-            var files = await _repo.GetByCondition(f => (f.Name.Contains(fileName) || fileName == null) && f.TypeId == fileType || fileType == null).ToListAsync();
+            var files = await _repo.GetByCondition(f => (f.Name.Contains(fileName) || fileName == null) && f.TypeId == fileType || fileType == null)
+                .OrderByDescending(f => f.LastEditedDate).ToListAsync();
             var fileDTO = _mapper.Map<List<FileDTO>>(files);
 
             return fileDTO;
@@ -80,6 +81,18 @@ namespace UpBox.Service
             //var fileSize = file.Length / 1024;
             //var filePath = filepath;
             //var fileLastEdited = System.IO.Path.GetCre
+        }
+
+        public async Task DeleteFileAsync(int id, FileUpdateDTO file)
+        {
+            var fileEntity = await _repo.GetByCondition(f => f.Id == id).FirstOrDefaultAsync();
+
+            fileEntity.IsDeleted = file.IsDeleted;
+            fileEntity.UpdatedBy = 1;
+            fileEntity.UpdatedDate = DateTime.Now;
+
+            _repo.Update(fileEntity);
+            await _repo.SaveAsync();
         }
 
         int GetFileType(string extension)
