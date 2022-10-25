@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UpBox.Model.Context;
 
 namespace UpBox.Migrations
 {
     [DbContext(typeof(UpBoxContext))]
-    partial class UpBoxContextModelSnapshot : ModelSnapshot
+    [Migration("20221025015523_Added_PathColumnTo_tbm_files")]
+    partial class Added_PathColumnTo_tbm_files
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,9 +37,6 @@ namespace UpBox.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime>("LastEditedDate")
-                        .HasColumnType("datetime");
 
                     b.Property<string>("Name")
                         .IsRequired()

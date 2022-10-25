@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using UpBox.Model.Context;
 using UpBox.Repository;
+using UpBox.Service;
 
 namespace UpBox
 {
@@ -25,7 +26,7 @@ namespace UpBox
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
             services.AddCors(options =>
             {
@@ -47,6 +48,7 @@ namespace UpBox
 
             services.AddDbContext<UpBoxContext>(option => option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection").ToString()));
             services.AddScoped<IFileRepository, FileRepository>();
+            services.AddScoped<IFileService, FileService>();
 
 
             // In production, the React files will be served from this directory

@@ -1,0 +1,1 @@
+﻿dotnet ef dbcontext scaffold name=DefaultConnection --context UpBoxContext --context-dir Model/Context --output-dir Model/ --use-database-names --data-annotations Microsoft.EntityFrameworkCore.SqlServer --force

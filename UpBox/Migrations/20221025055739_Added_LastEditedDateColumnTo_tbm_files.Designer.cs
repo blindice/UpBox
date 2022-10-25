@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UpBox.Model.Context;
 
 namespace UpBox.Migrations
 {
     [DbContext(typeof(UpBoxContext))]
-    partial class UpBoxContextModelSnapshot : ModelSnapshot
+    [Migration("20221025055739_Added_LastEditedDateColumnTo_tbm_files")]
+    partial class Added_LastEditedDateColumnTo_tbm_files
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

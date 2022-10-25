@@ -14,15 +14,13 @@ namespace UpBox.Repository
         UpBoxContext _context;
         public FileRepository(UpBoxContext context) => _context = context;
 
-        public IQueryable<tbl_file> GetAllFiles() => _context.tbl_files.AsNoTracking();
+        public IQueryable<tbl_file> GetAllFiles() => _context.tbl_files.Include(_ => _.Type).AsNoTracking();
 
-        public IQueryable<tbl_file> GetByCondition(Expression<Func<tbl_file, bool>> expression) => _context.tbl_files.Where(expression).AsNoTracking();
+        public IQueryable<tbl_file> GetByCondition(Expression<Func<tbl_file, bool>> expression) => _context.tbl_files.Include(_ => _.Type).Where(expression).AsNoTracking();
 
         public void Create(tbl_file entity) => _context.tbl_files.Add(entity);
 
         public void Update(tbl_file entity) => _context.tbl_files.Update(entity);
-
-        public void Delete(tbl_file entity) => _context.tbl_files.Remove(entity);
 
         public async Task SaveAsync() => await _context.SaveChangesAsync();
 

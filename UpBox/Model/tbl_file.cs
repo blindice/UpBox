@@ -16,8 +16,12 @@ namespace UpBox.Model
         [StringLength(30)]
         public string Name { get; set; }
         public long Size { get; set; }
+        [Required]
+        public string Path { get; set; }
         public int TypeId { get; set; }
         public bool IsDeleted { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime LastEditedDate { get; set; }
         public int CreatedBy { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime CreateDate { get; set; }
