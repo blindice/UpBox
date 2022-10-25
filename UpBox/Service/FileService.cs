@@ -10,6 +10,7 @@ using UpBox.DTO;
 using UpBox.Enum;
 using UpBox.Model;
 using UpBox.Repository;
+using static UpBox.Helper.FileHelper;
 
 namespace UpBox.Service
 {
@@ -46,7 +47,12 @@ namespace UpBox.Service
 
         public async Task Upload(FileUploadDTO file)
         {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "Files");
+            var fileExt = System.IO.Path.GetExtension(file.File.FileName).Substring(1);
+            var fileFolder = GetFileFolder(fileExt);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "Files", fileFolder);
+
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+
             var filepath = Path.Combine(path, file.File.FileName);
 
             using (var stream = System.IO.File.Create(filepath))
@@ -61,7 +67,7 @@ namespace UpBox.Service
             {
                 Name = fi.Name,
                 Size = fi.Length,
-                TypeId = GetFileType(fi.Extension.Substring(1)),
+                TypeId = GetFileType(fileExt),
                 Path = fi.FullName,
                 LastEditedDate = fi.LastWriteTime,
                 CreatedBy = file.CreatedBy,
@@ -94,35 +100,6 @@ namespace UpBox.Service
             _repo.Update(fileEntity);
             await _repo.SaveAsync();
         }
-
-        int GetFileType(string extension)
-        {
-            if (extension == "pdf" || extension == "doc" || extension == "docx" || extension == "html" ||
-                extension == "htm" || extension == "xls" || extension == "xlsx" || extension == "txt" ||
-                extension == "ppt " || extension == "pptx" || extension == "odp" || extension == "key")
-            {
-                return (int)FileType.Document;
-            }
-            else if (extension == "mp4" || extension == "avi" || extension == "mov" || extension == "flv" ||
-                extension == "AVCHD")
-            {
-                return (int)FileType.Video;
-            }
-            else if (extension == "m4a" || extension == "mp3" || extension == "wav" || extension == "flv" ||
-                extension == "AVCHD")
-            {
-                return (int)FileType.Audio;
-            }
-            else if (extension == "apng" || extension == "avif" || extension == "gif" || extension == "jpg" ||
-                extension == "jpeg" || extension == "jfif" || extension == "pjpeg" || extension == "pjp" ||
-                extension == "png" || extension == "svg" || extension == "webp" || extension == "pjp")
-            {
-                return (int)FileType.Image;
-            }
-            else
-            {
-                throw new Exception("Invalid File Format");
-            }
-        }
+     
     }
 }
