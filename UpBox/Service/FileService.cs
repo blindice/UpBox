@@ -44,14 +44,14 @@ namespace UpBox.Service
             return fileDTO;
         }
 
-        public async Task Upload(IFormFile file)
+        public async Task Upload(FileUploadDTO file)
         {
             var path = Path.Combine(Directory.GetCurrentDirectory(), "Files");
-            var filepath = Path.Combine(path, file.FileName);
+            var filepath = Path.Combine(path, file.File.FileName);
 
             using (var stream = System.IO.File.Create(filepath))
             {
-                await file.CopyToAsync(stream);
+                await file.File.CopyToAsync(stream);
             }
 
 
@@ -64,7 +64,7 @@ namespace UpBox.Service
                 TypeId = GetFileType(fi.Extension.Substring(1)),
                 Path = fi.FullName,
                 LastEditedDate = fi.LastWriteTime,
-                CreatedBy = 1,
+                CreatedBy = file.CreatedBy,
                 CreateDate = DateTime.Now
             };
 
@@ -88,7 +88,7 @@ namespace UpBox.Service
             var fileEntity = await _repo.GetByCondition(f => f.Id == id).FirstOrDefaultAsync();
 
             fileEntity.IsDeleted = file.IsDeleted;
-            fileEntity.UpdatedBy = 1;
+            fileEntity.UpdatedBy = file.UpdatedBy;
             fileEntity.UpdatedDate = DateTime.Now;
 
             _repo.Update(fileEntity);
