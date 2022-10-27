@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UpBox.DTO;
 using UpBox.Enum;
+using UpBox.Interface;
 using UpBox.Model;
 using UpBox.Repository;
 using static UpBox.Helper.FileHelper;
@@ -19,27 +21,18 @@ namespace UpBox.Service
     {
         IFileRepository _repo;
         IMapper _mapper;
-        public FileService(IFileRepository repo, IMapper mapper)
+        IFtpService _ftpSvc;
+        public FileService(IFileRepository repo, IMapper mapper, IFtpService ftpSvc)
         {
             _repo = repo;
             _mapper = mapper;
+            _ftpSvc = ftpSvc;
         }
         public async Task<(byte[], string, string)> DownloadAsync(string fileName)
         {
-            var fileExt = System.IO.Path.GetExtension(fileName).Substring(1);
-            var fileFolder = GetFileFolder(fileExt);
-            var path = Path.Combine(@"C:\Users\Ivan\Desktop\UpBox_Files", fileFolder);
-            var filePath = Path.Combine(path, fileName);
+            (byte[] bytes, string contentType, string filePath) = await _ftpSvc.DownloadFromFtpAsync(fileName);
 
-            var provider = new FileExtensionContentTypeProvider();
-            if (!provider.TryGetContentType(filePath, out var contentType))
-            {
-                contentType = "application /octet-stream";
-            }
-
-            var bytes = await System.IO.File.ReadAllBytesAsync(filePath);
-
-            return (bytes, contentType, filePath);
+            return (bytes, contentType, Path.GetFileName(filePath));
         }
 
         public async Task<List<FileDTO>> GetAllFilesAsync()
@@ -61,27 +54,15 @@ namespace UpBox.Service
 
         public async Task UploadAsync(FileUploadDTO file)
         {
-            var fileExt = System.IO.Path.GetExtension(file.File.FileName).Substring(1);
-            var fileFolder = GetFileFolder(fileExt);
-            var path = Path.Combine(@"C:\Users\Ivan\Desktop\UpBox_Files", fileFolder);
+            var filePath = await _ftpSvc.UploadToFtpAsync(file.File);
 
-            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-
-            var filepath = Path.Combine(path, file.File.FileName);
-
-            using (var stream = System.IO.File.Create(filepath))
-            {
-                await file.File.CopyToAsync(stream);
-            }
-
-
-            FileInfo fi = new FileInfo(filepath);
+            FileInfo fi = new FileInfo(filePath);
 
             var fileEntity = new tbl_file()
             {
                 Name = fi.Name,
                 Size = fi.Length,
-                TypeId = GetFileType(fileExt),
+                TypeId = GetFileType(fi.Extension.Substring(1)),
                 Path = fi.FullName,
                 LastEditedDate = fi.LastWriteTime,
                 CreatedBy = file.CreatedBy,
@@ -90,17 +71,6 @@ namespace UpBox.Service
 
             _repo.Create(fileEntity);
             await _repo.SaveAsync();
-            //var fileName = fi.Name;
-            //var fileExt = fi.Extension.Substring(1); ;
-            //var fileSize = fi.Length;
-            //var filePath = fi.FullName;
-            //var fileLastModified = fi.LastWriteTime;
-
-            //var fileName = file.FileName;
-            //var fileExt = System.IO.Path.GetExtension(file.FileName).Substring(1);
-            //var fileSize = file.Length / 1024;
-            //var filePath = filepath;
-            //var fileLastEdited = System.IO.Path.GetCre
         }
 
         public async Task DeleteFileAsync(int id, FileUpdateDTO file)

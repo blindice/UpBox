@@ -11,6 +11,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.IO;
+using UpBox.Interface;
 using UpBox.Model.Context;
 using UpBox.Repository;
 using UpBox.Service;
@@ -52,7 +53,7 @@ namespace UpBox
             services.AddDbContext<UpBoxContext>(option => option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection").ToString()));
             services.AddScoped<IFileRepository, FileRepository>();
             services.AddScoped<IFileService, FileService>();
-
+            services.AddScoped<IFtpService, FtpService>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
