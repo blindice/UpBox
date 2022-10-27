@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import FileDownload from "js-file-download";
 
 export default function FileUpload() {
   const [file, setFile] = useState();
@@ -15,7 +16,8 @@ export default function FileUpload() {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/file/getall`
       );
-      console.log(response);
+      console.log(`${process.env.REACT_APP_API_URL}/api/file/getall`);
+      console.log(response.data);
       setFiles(response.data);
     } catch (err) {
       console.log(err);
@@ -42,24 +44,47 @@ export default function FileUpload() {
       });
 
       console.log(response);
+
+      await getAll();
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const downloadFile = async (fileName) => {
+    axios({
+      url: `https://localhost:44311/api/file/download?filename=${fileName}`,
+      method: "GET",
+      responseType: "blob", // Important
+    }).then((response) => {
+      console.log(response.data);
+      FileDownload(response.data, fileName);
+    });
   };
 
   return (
     <>
       <input type="file" onChange={saveFile}></input>
       <input type="button" value="upload" onClick={uploadFile} />
-      {files.map((f) => (
-        <div>
-          <img
-            style={{ height: "150px", width: "150px" }}
-            src={`${process.env.REACT_APP_API_URL}/Files/Image/${f.name}`}
-          ></img>
-          <button>Download</button>
-        </div>
-      ))}
+      {files.length > 0 ? (
+        <ul style={{ display: "flex" }}>
+          {files.map((f) => {
+            return (
+              <li key={f.id}>
+                <img
+                  style={{ height: "150px", width: "150px" }}
+                  src={`${process.env.REACT_APP_API_URL}/Files/Image/${f.name}`}
+                ></img>
+                <button onClick={async () => await downloadFile(f.name)}>
+                  Download
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <h1>No File</h1>
+      )}
     </>
   );
 }
