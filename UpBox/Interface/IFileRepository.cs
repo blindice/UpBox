@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using UpBox.Model;
 
-namespace UpBox.Repository
+namespace UpBox.Interface
 {
     public interface IFileRepository
     {

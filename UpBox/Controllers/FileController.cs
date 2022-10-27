@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using UpBox.DTO;
+using UpBox.Interface;
 using UpBox.Service;
 
 namespace UpBox.Controllers
@@ -17,14 +18,9 @@ namespace UpBox.Controllers
     [ApiController]
     public class FileController : ControllerBase
     {
-        IConfiguration _config;
         IFileService _svc;
 
-        public FileController(IConfiguration config, IFileService svc)
-        {
-            _config = config;
-            _svc = svc;
-        }
+        public FileController(IConfiguration config, IFileService svc) => _svc = svc;
 
         [HttpGet("getall")]
         public async Task<IActionResult> GetAll()
@@ -53,9 +49,9 @@ namespace UpBox.Controllers
         [HttpGet("download")]
         public async Task<IActionResult> Download([FromQuery] string fileName)
         {
-            (byte[] bytes, string contentType, string filePath) = await _svc.DownloadAsync(fileName);
+            (byte[] bytes, string contentType, string name) = await _svc.DownloadAsync(fileName);
 
-            return File(bytes, contentType, Path.GetFileName(filePath));
+            return File(bytes, contentType, name);
         }
 
         [HttpPost("delete/{id}")]

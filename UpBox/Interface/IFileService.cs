@@ -8,7 +8,7 @@ using UpBox.DTO;
 using UpBox.Model;
 using UpBox.Repository;
 
-namespace UpBox.Service
+namespace UpBox.Interface
 {
     public interface IFileService
     {
