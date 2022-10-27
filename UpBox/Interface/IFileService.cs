@@ -21,7 +21,7 @@ namespace UpBox.Interface
 
         Task<(byte[], string, string)> DownloadAsync(string fileName);
 
-        Task DeleteFileAsync(int id, FileUpdateDTO file);
+        Task<string> DeleteFileAsync(int id, FileUpdateDTO file);
 
     }
 }

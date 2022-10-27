@@ -73,7 +73,7 @@ namespace UpBox.Service
             await _repo.SaveAsync();
         }
 
-        public async Task DeleteFileAsync(int id, FileUpdateDTO file)
+        public async Task<string> DeleteFileAsync(int id, FileUpdateDTO file)
         {
             var fileEntity = await _repo.GetByCondition(f => f.Id == id).FirstOrDefaultAsync();
 
@@ -83,6 +83,8 @@ namespace UpBox.Service
 
             _repo.Update(fileEntity);
             await _repo.SaveAsync();
+
+            return fileEntity.Name;
         }
 
     }

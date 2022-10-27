@@ -27,7 +27,14 @@ namespace UpBox.Controllers
         {
             var files = await _svc.GetAllFilesAsync();
 
-            return Ok(files);
+            var response = new ResponseDTO<List<FileDTO>>
+            {
+                isSuccess = true,
+                Result = files,
+                Message = "Get all files Successfully",
+            };
+
+            return Ok(response);
         }
 
         [HttpGet("getbyfiletypeandname")]
@@ -35,7 +42,14 @@ namespace UpBox.Controllers
         {
             var files = await _svc.GetFilesByNameAndFileTypeAsync(fileName, fileType);
 
-            return Ok(files);
+            var response = new ResponseDTO<List<FileDTO>>
+            {
+                isSuccess = true,
+                Result = files,
+                Message = "Get filtered files Successfully",
+            };
+
+            return Ok(response);
         }
 
         [HttpPost("upload")]
@@ -45,6 +59,13 @@ namespace UpBox.Controllers
             if (file.File.Length < 0) return BadRequest();
 
             await _svc.UploadAsync(file);
+
+            var response = new ResponseDTO<string>
+            {
+                isSuccess = true,
+                Result = file.File.FileName,
+                Message = "File Uploaded Successfully",
+            };
 
             return Ok();
         }
@@ -64,8 +85,16 @@ namespace UpBox.Controllers
         {
             if (id is null || !ModelState.IsValid) return BadRequest();
 
-            await _svc.DeleteFileAsync((int)id, file);
-            return Ok();
+            var fileName = await _svc.DeleteFileAsync((int)id, file);
+
+            var response = new ResponseDTO<string>
+            {
+                isSuccess = true,
+                Result = fileName,
+                Message = "File Deleted Successfully",
+            };
+
+            return Ok(response);
         }
     }
 }

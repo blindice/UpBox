@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.IO;
 using UpBox.Interface;
+using UpBox.Middleware;
 using UpBox.Model.Context;
 using UpBox.Repository;
 using UpBox.Service;
@@ -98,6 +99,8 @@ namespace UpBox
             app.UseCors("AllowOrigin");
 
             app.UseRouting();
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
