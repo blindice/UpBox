@@ -36,7 +36,7 @@ namespace UpBox
                 options.AddPolicy(name: "AllowOrigin",
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:3000", "http://localhost:4200")
+                        builder.WithOrigins("http://localhost:883", "https://localhost:4433", "http://localhost:3000")
                                             .AllowAnyHeader()
                                             .AllowAnyMethod();
                     });
@@ -90,7 +90,7 @@ namespace UpBox
             app.UseSpaStaticFiles();
             app.UseStaticFiles(new StaticFileOptions()
             {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Files")),
+                FileProvider = new PhysicalFileProvider(@"C:\Users\Ivan\Desktop\UpBox_Files"),
                 RequestPath = new PathString("/Files")
             });
 
