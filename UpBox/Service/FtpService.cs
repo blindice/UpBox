@@ -46,6 +46,8 @@ namespace UpBox.Service
 
             var filepath = Path.Combine(path, file.FileName);
 
+            if (System.IO.File.Exists(filepath)) throw new Exception("File Already Exists!");
+
             using (var stream = System.IO.File.Create(filepath))
             {
                 await file.CopyToAsync(stream);

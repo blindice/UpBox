@@ -84,6 +84,6 @@ namespace UpBox.Service
             _repo.Update(fileEntity);
             await _repo.SaveAsync();
         }
-     
+
     }
 }

@@ -34,6 +34,7 @@ namespace UpBox.Controllers
         public async Task<IActionResult> GetByFileTypeAndName([FromQuery] string fileName, [FromQuery] int? fileType)
         {
             var files = await _svc.GetFilesByNameAndFileTypeAsync(fileName, fileType);
+
             return Ok(files);
         }
 
@@ -41,7 +42,9 @@ namespace UpBox.Controllers
         [DisableRequestSizeLimit]
         public async Task<IActionResult> Upload([FromForm] FileUploadDTO file)
         {
-            if (file.File.Length > 0) await _svc.UploadAsync(file);
+            if (file.File.Length < 0) return BadRequest();
+
+            await _svc.UploadAsync(file);
 
             return Ok();
         }
@@ -49,6 +52,8 @@ namespace UpBox.Controllers
         [HttpGet("download")]
         public async Task<IActionResult> Download([FromQuery] string fileName)
         {
+            if (string.IsNullOrEmpty(fileName)) return BadRequest();
+
             (byte[] bytes, string contentType, string name) = await _svc.DownloadAsync(fileName);
 
             return File(bytes, contentType, name);
@@ -57,6 +62,8 @@ namespace UpBox.Controllers
         [HttpPost("delete/{id}")]
         public async Task<IActionResult> Delete(int? id, [FromBody] FileUpdateDTO file)
         {
+            if (id is null || !ModelState.IsValid) return BadRequest();
+
             await _svc.DeleteFileAsync((int)id, file);
             return Ok();
         }
