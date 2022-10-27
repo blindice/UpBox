@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -23,9 +24,22 @@ namespace UpBox.Service
             _repo = repo;
             _mapper = mapper;
         }
-        public Task Download()
+        public async Task<(byte[], string, string)> DownloadAsync(string fileName)
         {
-            throw new NotImplementedException();
+            var fileExt = System.IO.Path.GetExtension(fileName).Substring(1);
+            var fileFolder = GetFileFolder(fileExt);
+            var path = Path.Combine(@"C:\Users\Ivan\Desktop\UpBox_Files", fileFolder);
+            var filePath = Path.Combine(path, fileName);
+
+            var provider = new FileExtensionContentTypeProvider();
+            if (!provider.TryGetContentType(filePath, out var contentType))
+            {
+                contentType = "application /octet-stream";
+            }
+
+            var bytes = await System.IO.File.ReadAllBytesAsync(filePath);
+
+            return (bytes, contentType, filePath);
         }
 
         public async Task<List<FileDTO>> GetAllFilesAsync()
@@ -45,11 +59,11 @@ namespace UpBox.Service
             return fileDTO;
         }
 
-        public async Task Upload(FileUploadDTO file)
+        public async Task UploadAsync(FileUploadDTO file)
         {
             var fileExt = System.IO.Path.GetExtension(file.File.FileName).Substring(1);
             var fileFolder = GetFileFolder(fileExt);
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "Files", fileFolder);
+            var path = Path.Combine(@"C:\Users\Ivan\Desktop\UpBox_Files", fileFolder);
 
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 

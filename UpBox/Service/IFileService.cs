@@ -17,9 +17,9 @@ namespace UpBox.Service
 
         Task<List<FileDTO>> GetFilesByNameAndFileTypeAsync(string fileName, int? fileType);
 
-        Task Upload(FileUploadDTO file);
+        Task UploadAsync(FileUploadDTO file);
 
-        Task Download();
+        Task<(byte[], string, string)> DownloadAsync(string fileName);
 
         Task DeleteFileAsync(int id, FileUpdateDTO file);
 
