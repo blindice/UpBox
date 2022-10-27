@@ -39,7 +39,8 @@ namespace UpBox.Controllers
             return Ok(files);
         }
 
-        [HttpPost, DisableRequestSizeLimit]
+        [HttpPost]
+        [DisableRequestSizeLimit]
         public async Task<IActionResult> Upload([FromForm] FileUploadDTO file)
         {
 
