@@ -18,6 +18,8 @@ namespace UpBox.Model
         [Required]
         [StringLength(128)]
         public string Password { get; set; }
+        [StringLength(100)]
+        public string Fullname { get; set; }
         [Required]
         [StringLength(128)]
         public string Salt { get; set; }
