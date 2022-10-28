@@ -17,8 +17,8 @@ export default function FileUpload() {
         `${process.env.REACT_APP_API_URL}/api/file/getall`
       );
       console.log(`${process.env.REACT_APP_API_URL}/api/file/getall`);
-      console.log(response.data);
-      setFiles(response.data);
+      console.log(response.data.result);
+      setFiles(response.data.result);
     } catch (err) {
       console.log(err);
     }
