@@ -13,5 +13,7 @@ namespace UpBox.Interface
         Task<UserInfoDTO> GetUserByUserIdAsync(int userId);
 
         Task<string> GenerateJWTTokenAsync(UserInfoDTO userInfo);
+
+        Task RegisterAccountAsync(RegisterDTO account);
     }
 }

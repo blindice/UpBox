@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UpBox.DTO;
 using UpBox.Helper.CustomExceptions;
 using UpBox.Interface;
+using UpBox.Model;
 using static UpBox.Helper.PasswordManager;
 
 namespace UpBox.Service
@@ -24,7 +25,6 @@ namespace UpBox.Service
         }
         public async Task<UserInfoDTO> VerifyUserAsync(LoginDTO account)
         {
-            //var userInfo = await _uow.Login.VerifyUserAsync(account.Username);
             var userInfo = await _repo.GetByCondition(u => u.Username == account.Username).FirstOrDefaultAsync();
 
             if (userInfo is null) throw new CustomException("Invalid Account");
@@ -54,6 +54,26 @@ namespace UpBox.Service
             if (userInfo is null) throw new CustomException("Can't Generate JWT Token, Invalid User Info!");
 
             return await _jwt.GenerateJwtTokenAsync(userInfo);
+        }
+
+        public async Task RegisterAccountAsync(RegisterDTO account)
+        {
+            var userInfo = await _repo.GetByCondition(u => u.Username == account.Username).FirstOrDefaultAsync();
+
+            if(userInfo is not null) throw new CustomException("Username Already Exists!");
+
+            var salt = GenerateSalt();
+
+            var newAccount = new tbl_user
+            {
+                Username = account.Username,
+                Password = GetHash(account.Password, salt),
+                Fullname = account.Fullname,
+                Salt = salt
+            };
+
+            _repo.Create(newAccount);
+            await _repo.SaveAsync();
         }
     }
 }
