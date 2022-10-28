@@ -39,7 +39,7 @@ namespace UpBox.Service
 
         public async Task<string> UploadToFtpAsync(IFormFile file)
         {
-            var fileExt = System.IO.Path.GetExtension(file.FileName).Substring(1);
+            var fileExt = System.IO.Path.GetExtension(file.FileName).Substring(1).ToLower();
             var fileFolder = GetFileFolder(fileExt);
             var path = Path.Combine(_config.GetSection("Ftp:Server").Value, fileFolder);
 

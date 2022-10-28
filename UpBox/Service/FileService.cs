@@ -62,7 +62,7 @@ namespace UpBox.Service
             {
                 Name = fi.Name,
                 Size = fi.Length,
-                TypeId = GetFileType(fi.Extension.Substring(1)),
+                TypeId = GetFileType(fi.Extension.Substring(1).ToLower()),
                 Path = fi.FullName,
                 LastEditedDate = fi.LastWriteTime,
                 CreatedBy = file.CreatedBy,
