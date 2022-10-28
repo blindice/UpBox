@@ -16,5 +16,9 @@ namespace UpBox.Repository
         public AccountRepository(UpBoxContext context) => _context = context;
 
         public IQueryable<tbl_user> GetByCondition(Expression<Func<tbl_user, bool>> expression) => _context.tbl_users.Where(expression).AsNoTracking();
+
+        public void Create(tbl_user entity) => _context.tbl_users.Add(entity);
+
+        public async Task SaveAsync() => await _context.SaveChangesAsync();
     }
 }
