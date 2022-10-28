@@ -19,9 +19,9 @@ export default function App() {
   return (
     <FileUpload></FileUpload>
     // <Layout>
-    //   <Route exact path='/' component={Home} />
-    //   <Route path='/counter' component={Counter} />
-    //   <Route path='/fetch-data' component={FetchData} />
+    //   <Route exact path="/" component={Home} />
+    //   <Route path="/counter" component={Counter} />
+    //   <Route path="/fetch-data" component={FetchData} />
     // </Layout>
   );
 }

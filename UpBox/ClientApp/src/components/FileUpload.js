@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import FileDownload from "js-file-download";
+import Progress from "reactstrap/lib/Progress";
 
 export default function FileUpload() {
   const [file, setFile] = useState();
   const [fileName, setFileName] = useState("");
   const [files, setFiles] = useState([]);
+  const [progress, setProgress] = useState();
 
-  useEffect(() => {
-    getAll();
-  }, []);
+  // useEffect(() => {
+  //   getAll();
+  // }, []);
 
   const getAll = async () => {
     try {
@@ -41,6 +43,10 @@ export default function FileUpload() {
         url: `${process.env.REACT_APP_API_URL}/api/file/upload`,
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
+        onUploadProgress: (data) => {
+          //Set the progress value to show the progress bar
+          setProgress(Math.round((100 * data.loaded) / data.total));
+        },
       });
 
       console.log(response);
@@ -66,7 +72,8 @@ export default function FileUpload() {
     <>
       <input type="file" onChange={saveFile}></input>
       <input type="button" value="upload" onClick={uploadFile} />
-      {files.length > 0 ? (
+      <Progress value={progress} />
+      {/* {files.length > 0 ? (
         <ul style={{ display: "flex" }}>
           {files.map((f) => {
             return (
@@ -84,7 +91,7 @@ export default function FileUpload() {
         </ul>
       ) : (
         <h1>No File</h1>
-      )}
+      )} */}
     </>
   );
 }
