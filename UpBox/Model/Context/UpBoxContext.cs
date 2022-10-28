@@ -36,8 +36,6 @@ namespace UpBox.Model.Context
 
             modelBuilder.Entity<tbl_file>(entity =>
             {
-                entity.Property(e => e.Name).IsUnicode(false);
-
                 entity.HasOne(d => d.Type)
                     .WithMany(p => p.tbl_files)
                     .HasForeignKey(d => d.TypeId)
@@ -51,6 +49,8 @@ namespace UpBox.Model.Context
 
             modelBuilder.Entity<tbl_user>(entity =>
             {
+                entity.Property(e => e.Fullname).IsUnicode(false);
+
                 entity.Property(e => e.Username).IsUnicode(false);
             });
 
