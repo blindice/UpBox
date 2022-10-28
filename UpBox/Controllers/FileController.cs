@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +24,7 @@ namespace UpBox.Controllers
         public FileController(IConfiguration config, IFileService svc) => _svc = svc;
 
         [HttpGet("getall")]
+        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             var files = await _svc.GetAllFilesAsync();
@@ -38,6 +40,7 @@ namespace UpBox.Controllers
         }
 
         [HttpGet("getbyfiletypeandname")]
+        [Authorize]
         public async Task<IActionResult> GetByFileTypeAndName([FromQuery] string fileName, [FromQuery] int? fileType)
         {
             var files = await _svc.GetFilesByNameAndFileTypeAsync(fileName, fileType);
@@ -54,6 +57,7 @@ namespace UpBox.Controllers
 
         [HttpPost("upload")]
         [DisableRequestSizeLimit]
+        [Authorize]
         public async Task<IActionResult> Upload([FromForm] FileUploadDTO file)
         {
             if (file.File.Length < 0) return BadRequest();
@@ -71,6 +75,7 @@ namespace UpBox.Controllers
         }
 
         [HttpGet("download")]
+        [Authorize]
         public async Task<IActionResult> Download([FromQuery] string fileName)
         {
             if (string.IsNullOrEmpty(fileName)) return BadRequest();
@@ -81,6 +86,7 @@ namespace UpBox.Controllers
         }
 
         [HttpPost("delete/{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int? id, [FromBody] FileUpdateDTO file)
         {
             if (id is null || !ModelState.IsValid) return BadRequest();

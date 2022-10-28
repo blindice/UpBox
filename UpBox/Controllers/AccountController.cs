@@ -43,9 +43,16 @@ namespace UpBox.Controllers
         {
             if (!ModelState.IsValid) return BadRequest("Invalid Account");
 
+            await _service.RegisterAccountAsync(account);
 
+            var response = new ResponseDTO<RegisterDTO>
+            {
+                isSuccess = true,
+                Result = account,
+                Message = "Registered Successfully",              
+            };
 
-            return Ok();
+            return Ok(response);
         }
 
     }
