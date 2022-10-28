@@ -35,7 +35,7 @@ namespace UpBox.Middleware
 
             context.Response.StatusCode = exception switch
             {
-                CustomException => (int)HttpStatusCode.Conflict,
+                CustomException => (int)HttpStatusCode.OK,
                 _ => (int)HttpStatusCode.InternalServerError
             };
             await context.Response.WriteAsync(new ResponseDTO<object>
