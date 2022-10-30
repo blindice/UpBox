@@ -27,7 +27,7 @@ namespace UpBox.Service
         {
             var userInfo = await _repo.GetByCondition(u => u.Username == account.Username).FirstOrDefaultAsync();
 
-            if (userInfo is null) throw new CustomException("Invalid Account");
+            if (userInfo is null) throw new CustomException("User Not Found!");
 
             var hash = GetHash(account.Password, userInfo.Salt);
 

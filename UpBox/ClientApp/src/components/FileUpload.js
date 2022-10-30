@@ -72,7 +72,7 @@ export default function FileUpload() {
     <>
       <input type="file" onChange={saveFile}></input>
       <input type="button" value="upload" onClick={uploadFile} />
-      <Progress value={progress} />
+      <Progress value={progress} animated />
       {/* {files.length > 0 ? (
         <ul style={{ display: "flex" }}>
           {files.map((f) => {

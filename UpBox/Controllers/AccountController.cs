@@ -30,11 +30,16 @@ namespace UpBox.Controllers
 
             var result = await _service.VerifyUserAsync(account);
 
-            if (result is null) return NotFound("Account Not Found!");
-
             var tokenString = await _service.GenerateJWTTokenAsync(result);
 
-            return Ok(new { Token = tokenString });
+            var response = new ResponseDTO<string>
+            {
+                isSuccess = true,
+                Result = tokenString,
+                Message = "Login Successfully",
+            };
+
+            return Ok(response);
         }
 
         [HttpPost("register")]

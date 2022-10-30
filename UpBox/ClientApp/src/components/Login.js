@@ -2,44 +2,89 @@ import React, { useState } from "react";
 import axios from "axios";
 import jwt from "jwt-decode";
 import PropTypes from "prop-types";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { Form, Input, Button, notification } from "antd";
+
+import "./Login.css";
 
 export default function Login({ setToken }) {
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const login = async (value) => {
+    setLoading(true);
+    var response = await axios.post(
+      `${process.env.REACT_APP_API_URL}/api/account/login`,
+      value
+    );
+    var data = response.data;
+    console.log(data);
+    if (data.isSuccess) {
+      console.log(data.result);
+      setToken(data.result);
+    } else {
+      console.log(data.Message);
+      setError(data.Message);
+      openNotification(data.Message);
+    }
 
-  const login = async (e) => {
-    e.preventDefault();
-    await axios
-      .post(`${process.env.REACT_APP_API_URL}/api/account/login`, {
-        username,
-        password,
-      })
-      .then((response) => {
-        setToken(response.data.token);
-        const payload = jwt(localStorage.getItem("token"));
-        console.log(payload);
-      });
+    setLoading(false);
+  };
+
+  const openNotification = (message) => {
+    notification.error({
+      message: `${message}`,
+      placement: "bottomRight",
+    });
   };
 
   return (
-    <div className="login-wrapper">
-      <h1>Please Log In</h1>
-      <form onSubmit={login}>
-        <label>
-          <p>Username</p>
-          <input type="text" onChange={(e) => setUsername(e.target.value)} />
-        </label>
-        <label>
-          <p>Password</p>
-          <input
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
+    <div className="login-container">
+      <Form className="login-form" onFinish={login}>
+        <Form.Item>
+          <h1 className="logo">UpBox</h1>
+        </Form.Item>
+        <Form.Item
+          name="username"
+          rules={[
+            {
+              required: true,
+              message: "Please input your username!",
+            },
+          ]}
+        >
+          <Input
+            prefix={<UserOutlined />}
+            placeholder="Username"
+            size="large"
           />
-        </label>
-        <div>
-          <button type="submit">Submit</button>
-        </div>
-      </form>
+        </Form.Item>
+        <Form.Item
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: "Please input your password!",
+            },
+          ]}
+        >
+          <Input
+            prefix={<LockOutlined />}
+            type="password"
+            placeholder="Password"
+            size="large"
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+            loading={loading}
+          >
+            Log in
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 }
