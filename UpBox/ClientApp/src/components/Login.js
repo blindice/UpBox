@@ -9,22 +9,26 @@ import "./Login.css";
 export default function Login({ setToken }) {
   const [loading, setLoading] = useState(false);
   const login = async (value) => {
-    setLoading(true);
-    var response = await axios.post(
-      `${process.env.REACT_APP_API_URL}/api/account/login`,
-      value
-    );
-    var data = response.data;
-    console.log(data);
-    if (data.isSuccess) {
-      console.log(data.result);
-      setToken(data.result);
-    } else {
-      console.log(data.Message);
-      openNotification(data.Message);
-    }
+    try {
+      setLoading(true);
+      var response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/account/login`,
+        value
+      );
+      var data = response.data;
+      console.log(data);
+      if (data.isSuccess) {
+        console.log(data.result);
+        setToken(data.result);
+      } else {
+        console.log(data.Message);
+        openNotification(data.Message);
+      }
 
-    setLoading(false);
+      setLoading(false);
+    } catch (err) {
+      openNotification(err.message);
+    }
   };
 
   const openNotification = (message) => {
