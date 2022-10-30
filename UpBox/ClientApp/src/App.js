@@ -9,15 +9,18 @@ import {
   FileAddTwoTone,
   DeleteTwoTone,
   FolderTwoTone,
-  LeftCircleTwoTone,
-  RightCircleTwoTone,
 } from "@ant-design/icons";
-import { Button, Layout, Menu } from "antd";
+import { Layout, Menu, Spin } from "antd";
 
 import "./custom.css";
 import "./components/App.css";
 import Login from "./components/Login";
 import useToken from "./helper/useToken";
+import DashBoard from "./components/DashBoard";
+import Files from "./components/Files";
+import Upload from "./components/Upload";
+import Trash from "./components/Trash";
+import UserHeader from "./components/UserHeader";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -36,13 +39,11 @@ export default function App() {
     return <Login setToken={setToken}></Login>;
   }
   return (
-    // <FileUpload></FileUpload>
-    // <Layout>
-    //   <Route exact path="/" component={Home} />
-    //   <Route path="/counter" component={Counter} />
-    //   <Route path="/fetch-data" component={FetchData} />
-    // </Layout>
-    <Layout style={{ minHeight: "100vh" }} theme="light">
+    <Layout
+      style={{ minHeight: "100vh" }}
+      theme="light"
+      className="layout-container"
+    >
       <Sider
         className="side-menu"
         collapsed={collapse}
@@ -77,7 +78,7 @@ export default function App() {
             className="side-menu-item"
           >
             <span>Files</span>
-            <Link to="/files" />
+            <Link to="/file" />
           </Menu.Item>
           <Menu.Item
             key="3"
@@ -85,7 +86,7 @@ export default function App() {
             className="side-menu-item"
           >
             <span>Upload</span>
-            <Link to="/meseros" />
+            <Link to="/upload" />
           </Menu.Item>
           <Menu.Item
             key="4"
@@ -93,33 +94,35 @@ export default function App() {
             className="side-menu-item"
           >
             <span>Trash</span>
-            <Link to="/meseros" />
+            <Link to="/trash" />
           </Menu.Item>
         </Menu>
       </Sider>
-      <Layout>
-        <Header style={{ background: "#f0f2f5", padding: 0, paddingLeft: 10 }}>
-          <span
-            className="trigger"
-            type={collapse ? "menu-unfold" : "menu-fold"}
-            style={{ cursor: "pointer" }}
-            onClick={toggle}
-          >
-            {collapse ? <RightCircleTwoTone /> : <LeftCircleTwoTone />}
-          </span>
+      <Layout style={{ background: "#fff" }}>
+        <Header style={{ background: "#fff", padding: 0, paddingLeft: 10 }}>
+          <UserHeader
+            collapse={collapse}
+            toggle={toggle}
+            token={token}
+            setToken={setToken}
+          />
         </Header>
         <Content
           style={{
             margin: "24px 16px",
             padding: 24,
-            background: "#f0f2f5",
+            background: "#fff",
             minHeight: 280,
           }}
         >
-          {/* <Route exact path="/" component={<Counter />} />
-          <Route path="/meseros" component={<FetchData />} /> */}
+          <Route exact path="/" component={DashBoard} />
+          <Route path="/file" component={Files} />
+          <Route path="/upload" component={Upload} />
+          <Route path="/trash" component={Trash} />
         </Content>
-        <Footer style={{ textAlign: "center" }}>Upbox ©2022</Footer>
+        <Footer style={{ textAlign: "center", background: "#fff" }}>
+          Upbox ©2022
+        </Footer>
       </Layout>
     </Layout>
   );

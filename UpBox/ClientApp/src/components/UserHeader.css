@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Lato:ital,wght@0,300;1,400&family=Luckiest+Guy&family=Poiret+One&display=swap');
+
+.user-header{
+    float: right;
+    margin-right: 20px;
+    
+}
+
+.user-header > span{
+    margin-right: 10px;
+    font-family: 'Lato', sans-serif;
+    font-weight: bold;
+}
