@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import jwt from "jwt-decode";
 import PropTypes from "prop-types";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Form, Input, Button, notification } from "antd";
@@ -8,7 +7,6 @@ import { Form, Input, Button, notification } from "antd";
 import "./Login.css";
 
 export default function Login({ setToken }) {
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const login = async (value) => {
     setLoading(true);
@@ -23,7 +21,6 @@ export default function Login({ setToken }) {
       setToken(data.result);
     } else {
       console.log(data.Message);
-      setError(data.Message);
       openNotification(data.Message);
     }
 
