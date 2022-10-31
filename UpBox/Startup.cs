@@ -73,6 +73,7 @@ namespace UpBox
             });
 
             services.AddDbContext<UpBoxContext>(option => option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection").ToString()));
+            services.AddDbContextFactory<UpBoxContext>(option => option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection").ToString()));
             services.AddScoped<IFileRepository, FileRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IFileService, FileService>();
