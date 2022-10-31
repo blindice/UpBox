@@ -72,8 +72,7 @@ namespace UpBox
                 o.MemoryBufferThreshold = int.MaxValue;
             });
 
-            services.AddDbContext<UpBoxContext>(option => option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection").ToString()));
-            services.AddDbContextFactory<UpBoxContext>(option => option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection").ToString()));
+            services.AddDbContext<UpBoxContext>(option => option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection").ToString()), ServiceLifetime.Transient);
             services.AddScoped<IFileRepository, FileRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IFileService, FileService>();
