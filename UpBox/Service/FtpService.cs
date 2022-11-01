@@ -47,7 +47,7 @@ namespace UpBox.Service
 
             var filepath = Path.Combine(path, file.FileName);
 
-            if (System.IO.File.Exists(filepath)) throw new CustomException("File Already Exists!");
+            if (System.IO.File.Exists(filepath)) throw new FileException("File Already Exists!");
 
             using (var stream = System.IO.File.Create(filepath))
             {

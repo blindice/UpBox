@@ -15,7 +15,7 @@ namespace UpBox.Repository
         UpBoxContext _context;
         public FileRepository(UpBoxContext context) => _context = context;
 
-        public IQueryable<tbl_file> GetAllFiles() => _context.tbl_files.Include(_ => _.Type).AsNoTracking();
+        public IQueryable<tbl_file> GetAllFiles() => _context.tbl_files.Include(_ => _.Type).Where(_ => !_.IsDeleted).AsNoTracking();
 
         public IQueryable<tbl_file> GetByCondition(Expression<Func<tbl_file, bool>> expression) => _context.tbl_files.Include(_ => _.Type).Where(expression).AsNoTracking();
 

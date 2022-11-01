@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UpBox.Enum;
+using UpBox.Helper.CustomExceptions;
 
 namespace UpBox.Helper
 {
@@ -13,7 +14,8 @@ namespace UpBox.Helper
         {
             if (extension == "pdf" || extension == "doc" || extension == "docx" || extension == "html" ||
                extension == "htm" || extension == "xls" || extension == "xlsx" || extension == "txt" ||
-               extension == "ppt " || extension == "pptx" || extension == "odp" || extension == "key")
+               extension == "ppt " || extension == "pptx" || extension == "odp" || extension == "key" || 
+               extension == "csv")
             {
                 return Convert.ToString((FileType)1);
             }
@@ -35,7 +37,7 @@ namespace UpBox.Helper
             }
             else
             {
-                throw new Exception("Invalid File Format");
+                throw new FileException("Invalid File Format");
             }
         }
 
@@ -44,7 +46,8 @@ namespace UpBox.Helper
         {
             if (extension == "pdf" || extension == "doc" || extension == "docx" || extension == "html" ||
                 extension == "htm" || extension == "xls" || extension == "xlsx" || extension == "txt" ||
-                extension == "ppt " || extension == "pptx" || extension == "odp" || extension == "key")
+                extension == "ppt " || extension == "pptx" || extension == "odp" || extension == "key" ||
+                extension == "csv")
             {
                 return (int)FileType.Document;
             }
@@ -66,7 +69,7 @@ namespace UpBox.Helper
             }
             else
             {
-                throw new Exception("Invalid File Format");
+                throw new FileException("Invalid File Format");
             }
         }
     }

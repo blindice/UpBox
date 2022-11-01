@@ -45,7 +45,7 @@ namespace UpBox.Service
 
         public async Task<List<FileDTO>> GetFilesByNameAndFileTypeAsync(string fileName, int? fileType)
         {
-            var files = await _repo.GetByCondition(f => (f.Name.Contains(fileName) || fileName == null) && f.TypeId == fileType || fileType == null)
+            var files = await _repo.GetByCondition(f => (f.Name.Contains(fileName) || fileName == null) && (f.TypeId == fileType || fileType == null) && !f.IsDeleted) 
                 .OrderByDescending(f => f.LastEditedDate).ToListAsync();
             var fileDTO = _mapper.Map<List<FileDTO>>(files);
 

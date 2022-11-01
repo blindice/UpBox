@@ -24,6 +24,10 @@ namespace UpBox.Middleware
             {
                 await HandleExceptionAsync(httpContext, ex);
             }
+            catch (FileException ex)
+            {
+                await HandleExceptionAsync(httpContext, ex);
+            }
             catch (Exception ex)
             {
                 await HandleExceptionAsync(httpContext, ex);

@@ -25,6 +25,7 @@ namespace UpBox.Controllers
 
         [HttpGet("getall")]
         [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FileDTO>))]
         public async Task<IActionResult> GetAll()
         {
             var files = await _svc.GetAllFilesAsync();
