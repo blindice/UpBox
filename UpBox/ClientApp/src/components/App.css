@@ -47,3 +47,7 @@
 .side-menu-item:hover{
     transform: scale(1.1);
 }
+
+.ant-layout-content{
+    margin: 0px 16px;
+}
