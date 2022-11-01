@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Home } from "./components/Home";
-import { FetchData } from "./components/FetchData";
-import { Counter } from "./components/Counter";
 import { Route } from "react-router";
 import { Link } from "react-router-dom";
 import {
@@ -18,7 +15,7 @@ import Login from "./components/Login";
 import useToken from "./helper/useToken";
 import DashBoard from "./components/DashBoard";
 import Files from "./components/Files";
-import Upload from "./components/Upload";
+import Uploads from "./components/Uploads";
 import Trash from "./components/Trash";
 import UserHeader from "./components/UserHeader";
 
@@ -109,7 +106,7 @@ export default function App() {
         </Header>
         <Content
           style={{
-            margin: "24px 16px",
+            margin: "0px 16px",
             padding: 24,
             background: "#fff",
             minHeight: 280,
@@ -117,10 +114,16 @@ export default function App() {
         >
           <Route exact path="/" component={DashBoard} />
           <Route path="/file" component={Files} />
-          <Route path="/upload" component={Upload} />
+          <Route path="/upload" component={Uploads} />
           <Route path="/trash" component={Trash} />
         </Content>
-        <Footer style={{ textAlign: "center", background: "#fff" }}>
+        <Footer
+          style={{
+            textAlign: "center",
+            background: "#fff",
+            padding: "15px 50px",
+          }}
+        >
           Upbox ©2022
         </Footer>
       </Layout>

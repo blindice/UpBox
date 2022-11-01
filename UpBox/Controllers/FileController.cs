@@ -61,6 +61,11 @@ namespace UpBox.Controllers
         [Authorize]
         public async Task<IActionResult> Upload([FromForm] FileUploadDTO file)
         {
+            var userId = Convert.ToInt32(Request.Headers["updatedby"][0]);
+            //var lastModified = Request.Headers["lastmodifieddate"][0];
+
+            file.CreatedBy = userId;
+
             if (file.File.Length < 0) return BadRequest();
 
             await _svc.UploadAsync(file);

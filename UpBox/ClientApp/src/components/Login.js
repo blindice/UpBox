@@ -3,11 +3,13 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Form, Input, Button, notification } from "antd";
+import { useHistory } from "react-router-dom";
 
 import "./Login.css";
 
 export default function Login({ setToken }) {
   const [loading, setLoading] = useState(false);
+  const history = useHistory();
   const login = async (value) => {
     try {
       setLoading(true);
@@ -16,16 +18,14 @@ export default function Login({ setToken }) {
         value
       );
       var data = response.data;
-      console.log(data);
       if (data.isSuccess) {
-        console.log(data.result);
         setToken(data.result);
       } else {
-        console.log(data.Message);
         openNotification(data.Message);
       }
 
       setLoading(false);
+      history.push("/");
     } catch (err) {
       openNotification(err.message);
     }
