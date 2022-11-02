@@ -33,7 +33,7 @@ namespace UpBox.Service
                     new Claim("username", result.Username),
                     new Claim("name", result.Fullname)
                 }),
-                    Expires = DateTime.UtcNow.AddHours(1),
+                    Expires = DateTime.UtcNow.AddDays(120),
                     Issuer = _config["Jwt:Issuer"],
                     Audience = _config["Jwt:Audience"],
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
