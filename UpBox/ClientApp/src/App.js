@@ -18,6 +18,7 @@ import Files from "./components/Files";
 import Uploads from "./components/Uploads";
 import Trash from "./components/Trash";
 import UserHeader from "./components/UserHeader";
+import Images from "./components/Images";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -116,6 +117,7 @@ export default function App() {
           <Route path="/file" component={Files} />
           <Route path="/upload" component={Uploads} />
           <Route path="/trash" component={Trash} />
+          <Route path="/images" component={Images} />
         </Content>
         <Footer
           style={{

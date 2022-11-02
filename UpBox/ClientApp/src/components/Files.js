@@ -1,5 +1,6 @@
 import React from "react";
 import { AwesomeButton } from "react-awesome-button";
+import { useHistory } from "react-router-dom";
 import {
   VideoCameraOutlined,
   FileTextOutlined,
@@ -11,6 +12,11 @@ import "./Files.css";
 import "react-awesome-button/dist/styles.css";
 
 export default function Files() {
+  const history = useHistory();
+
+  const routeChange = (path) => {
+    history.push(path);
+  };
   return (
     <>
       <h4 className="header-text">Files</h4>
@@ -44,6 +50,10 @@ export default function Files() {
           type="primary"
           style={{ height: 150, width: 650, fontSize: "50px" }}
           before={<SoundOutlined style={{ marginRight: "20px" }} />}
+          onPress={() => {
+            // do a sync/async task then call `release()`
+            routeChange("/images");
+          }}
         >
           Images
         </AwesomeButton>

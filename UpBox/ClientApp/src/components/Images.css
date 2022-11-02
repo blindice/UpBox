@@ -1,0 +1,19 @@
+.image-container{
+    height: 74vh;
+    overflow-y: scroll;
+    margin-top: 5vh;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: auto auto 1fr 1fr 1fr auto auto;
+    grid-row-gap: 30px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.image-container::-webkit-scrollbar {
+    display: none;
+  }
+
+.ant-image{
+    text-align: center;
+}
