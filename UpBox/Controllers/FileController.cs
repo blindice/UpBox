@@ -42,9 +42,9 @@ namespace UpBox.Controllers
 
         [HttpGet("getbyfiletypeandname")]
         [Authorize]
-        public async Task<IActionResult> GetByFileTypeAndName([FromQuery] string fileName, [FromQuery] int? fileType)
+        public async Task<IActionResult> GetByFileTypeAndName([FromQuery] string fileName, [FromQuery] int? fileType, [FromQuery] bool isDeleted)
         {
-            var files = await _svc.GetFilesByNameAndFileTypeAsync(fileName, fileType);
+            var files = await _svc.GetFilesByNameAndFileTypeAsync(fileName, fileType, isDeleted);
 
             var response = new ResponseDTO<List<FileDTO>>
             {
@@ -98,6 +98,24 @@ namespace UpBox.Controllers
             if (id is null || !ModelState.IsValid) return BadRequest();
 
             var fileName = await _svc.DeleteFileAsync((int)id, file);
+
+            var response = new ResponseDTO<string>
+            {
+                isSuccess = true,
+                Result = fileName,
+                Message = "File Deleted Successfully",
+            };
+
+            return Ok(response);
+        }
+
+        [HttpPost("restore/{id}")]
+        [Authorize]
+        public async Task<IActionResult> Restore(int? id, [FromBody] FileUpdateDTO file)
+        {
+            if (id is null || !ModelState.IsValid) return BadRequest();
+
+            var fileName = await _svc.RestoreFileAsync((int)id, file);
 
             var response = new ResponseDTO<string>
             {
