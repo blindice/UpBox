@@ -47,7 +47,7 @@ export default function DashBoard() {
 
       console.log(response);
 
-      message.success(`Delete success!`);
+      message.success(`Delete success!`, 2);
 
       await getFiles();
     } catch (err) {
