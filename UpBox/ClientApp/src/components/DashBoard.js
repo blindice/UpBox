@@ -17,7 +17,7 @@ export default function DashBoard() {
       setFileName(filename);
       setFileType(filetype);
     } catch (err) {
-      console.log(err);
+      message.error("Something went wrong 😭", 5);
     }
   };
 
@@ -25,7 +25,6 @@ export default function DashBoard() {
     try {
       const token = JSON.parse(localStorage.getItem("token"));
       const user = jwt(token);
-      console.log(user);
 
       var data = JSON.stringify({
         Id: id,
@@ -45,13 +44,11 @@ export default function DashBoard() {
 
       const response = await axios(config);
 
-      console.log(response);
-
       message.success(`Delete success!`, 2);
 
       await getFiles();
     } catch (err) {
-      console.log(err);
+      message.error("Something went wrong 😭", 5);
     }
   };
 
@@ -72,7 +69,7 @@ export default function DashBoard() {
 
       setfiles(data);
     } catch (err) {
-      console.log(err);
+      message.error("Something went wrong 😭", 5);
     }
   };
 

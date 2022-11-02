@@ -23,7 +23,7 @@ export default function Uploads() {
 
       //if ile is greater than 100mb
       if (file.size > 104857600) {
-        message.error(`${file.name} size is too large`, 5);
+        message.error(`${file.name} size is too large 😡`, 5);
         return false;
       }
       return true;
@@ -38,15 +38,16 @@ export default function Uploads() {
         }
 
         if (status === "done") {
-          message.success(`${info.file.name} file upload success.`, 2);
+          message.success(`${info.file.name} file upload success 😊 `, 2);
         } else if (status === "error") {
           message.error(
-            `${info.file.name} file upload failed. ${info.file.response.Message}`,
+            `${info.file.name} file upload failed. ${info.file.response.Message} 😭`,
+            5,
             5
           );
         }
       } catch (err) {
-        console.log(err);
+        message.error("Something went wrong 😭", 5);
       }
     },
     onDrop(e) {

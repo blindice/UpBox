@@ -16,7 +16,7 @@ export default function Trash() {
       setFileName(filename);
       setFileType(filetype);
     } catch (err) {
-      console.log(err);
+      message.error("Something went wrong 😭", 5);
     }
   };
 
@@ -24,7 +24,6 @@ export default function Trash() {
     try {
       const token = JSON.parse(localStorage.getItem("token"));
       const user = jwt(token);
-      console.log(user);
 
       var data = JSON.stringify({
         Id: id,
@@ -44,13 +43,11 @@ export default function Trash() {
 
       const response = await axios(config);
 
-      console.log(response);
-
-      message.success(`Restore success!`);
+      message.success(`Restore success 😊`, 2);
 
       await getFiles();
     } catch (err) {
-      console.log(err);
+      message.error("Something went wrong 😭", 5);
     }
   };
 
@@ -71,7 +68,7 @@ export default function Trash() {
 
       setfiles(data);
     } catch (err) {
-      console.log(err);
+      message.error("Something went wrong 😭", 5);
     }
   };
 
