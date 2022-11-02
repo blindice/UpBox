@@ -15,13 +15,15 @@ namespace UpBox.Interface
 
         Task<List<FileDTO>> GetAllFilesAsync();
 
-        Task<List<FileDTO>> GetFilesByNameAndFileTypeAsync(string fileName, int? fileType);
+        Task<List<FileDTO>> GetFilesByNameAndFileTypeAsync(string fileName, int? fileType, bool isDeleted);
 
         Task UploadAsync(FileUploadDTO file);
 
         Task<(byte[], string, string)> DownloadAsync(string fileName);
 
         Task<string> DeleteFileAsync(int id, FileUpdateDTO file);
+
+        Task<string> RestoreFileAsync(int id, FileUpdateDTO file);
 
     }
 }

@@ -21,7 +21,7 @@ namespace UpBox.Service
         }
         public async Task<(byte[], string, string)> DownloadFromFtpAsync(string fileName)
         {
-            var fileExt = System.IO.Path.GetExtension(fileName).Substring(1);
+            var fileExt = Path.GetExtension(fileName).Substring(1);
             var fileFolder = GetFileFolder(fileExt);
             var path = Path.Combine(_config.GetSection("Ftp:Server").Value, fileFolder);
             var filePath = Path.Combine(path, fileName);
@@ -47,14 +47,48 @@ namespace UpBox.Service
 
             var filepath = Path.Combine(path, file.FileName);
 
-            if (System.IO.File.Exists(filepath)) throw new FileException("File Already Exists!");
+            if (File.Exists(filepath)) throw new FileException("File Already Exists!");
 
-            using (var stream = System.IO.File.Create(filepath))
+            using (var stream = File.Create(filepath))
             {
                 await file.CopyToAsync(stream);
             }
 
             return filepath;
+        }
+
+        public string MoveFileToDeleteFolderAsync(string filePath)
+        {
+            var newPath = Path.Combine(_config.GetSection("Ftp:Server").Value, "Trash");
+
+            if (!Directory.Exists(newPath)) Directory.CreateDirectory(newPath);
+
+            if (!File.Exists(filePath)) throw new FileException("File to Delete not found!");
+
+            var fileName = Path.GetFileName(filePath);
+            var newFIlePath = Path.Combine(newPath, fileName);
+
+            File.Move(filePath, newFIlePath);
+
+            return newFIlePath;
+        }
+
+        public string RestoreFileAsync(string filePath)
+        {
+            var fileName = Path.GetFileName(filePath);
+            var fileExt = Path.GetExtension(fileName).Substring(1).ToLower();
+            var fileFolder = GetFileFolder(fileExt);
+            var newPath = Path.Combine(_config.GetSection("Ftp:Server").Value, fileFolder);
+
+            if (!Directory.Exists(newPath)) Directory.CreateDirectory(newPath);
+
+            if (!File.Exists(filePath)) throw new FileException("File to Delete not found!");
+
+            var newFIlePath = Path.Combine(newPath, fileName);
+
+            File.Move(filePath, newFIlePath);
+
+            return newFIlePath;
         }
     }
 }

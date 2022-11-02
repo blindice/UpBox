@@ -43,9 +43,9 @@ namespace UpBox.Service
             return fileDTO;
         }
 
-        public async Task<List<FileDTO>> GetFilesByNameAndFileTypeAsync(string fileName, int? fileType)
+        public async Task<List<FileDTO>> GetFilesByNameAndFileTypeAsync(string fileName, int? fileType, bool isDeleted)
         {
-            var files = await _repo.GetByCondition(f => (f.Name.Contains(fileName) || fileName == null) && (f.TypeId == fileType || fileType == null) && !f.IsDeleted) 
+            var files = await _repo.GetByCondition(f => ((f.Name.Contains(fileName) || fileName == null) && (f.TypeId == fileType || fileType == null)) && f.IsDeleted == isDeleted) 
                 .OrderByDescending(f => f.LastEditedDate).ToListAsync();
             var fileDTO = _mapper.Map<List<FileDTO>>(files);
 
@@ -75,8 +75,28 @@ namespace UpBox.Service
 
         public async Task<string> DeleteFileAsync(int id, FileUpdateDTO file)
         {
-            var fileEntity = await _repo.GetByCondition(f => f.Id == id).FirstOrDefaultAsync();
+            var fileEntity = await _repo.GetByCondition(f => f.Id == id && !f.IsDeleted).FirstOrDefaultAsync();
 
+            var newFilePath =  _ftpSvc.MoveFileToDeleteFolderAsync(fileEntity.Path);
+
+            fileEntity.Path = newFilePath;
+            fileEntity.IsDeleted = file.IsDeleted;
+            fileEntity.UpdatedBy = file.UpdatedBy;
+            fileEntity.UpdatedDate = DateTime.Now;
+
+            _repo.Update(fileEntity);
+            await _repo.SaveAsync();
+
+            return fileEntity.Name;
+        }
+
+        public async Task<string> RestoreFileAsync(int id, FileUpdateDTO file)
+        {
+            var fileEntity = await _repo.GetByCondition(f => f.Id == id && f.IsDeleted).FirstOrDefaultAsync();
+
+            var newFilePath = _ftpSvc.RestoreFileAsync(fileEntity.Path);
+
+            fileEntity.Path = newFilePath;
             fileEntity.IsDeleted = file.IsDeleted;
             fileEntity.UpdatedBy = file.UpdatedBy;
             fileEntity.UpdatedDate = DateTime.Now;
