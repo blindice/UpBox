@@ -31,7 +31,7 @@ namespace UpBox.Helper
             }
             else if (extension == "apng" || extension == "avif" || extension == "gif" || extension == "jpg" ||
                 extension == "jpeg" || extension == "jfif" || extension == "pjpeg" || extension == "pjp" ||
-                extension == "png" || extension == "svg" || extension == "webp" || extension == "pjp")
+                extension == "png" || extension == "svg" || extension == "webp")
             {
                 return Convert.ToString((FileType)4);
             }

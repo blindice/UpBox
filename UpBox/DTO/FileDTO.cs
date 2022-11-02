@@ -15,5 +15,7 @@ namespace UpBox.DTO
         public long Size { get; set; }
 
         public int TypeId { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }
