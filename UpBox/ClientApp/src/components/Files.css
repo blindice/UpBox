@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Lato:wght@300&family=Luckiest+Guy&family=Poiret+One&display=swap');
+
+.awesome-button-container{
+    padding-left: 8%;
+    margin-top: 10%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-row-gap: 20px;
+    grid-column-gap: 10px;
+    font-family: 'Lato', sans-serif;
+}
