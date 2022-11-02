@@ -27,7 +27,7 @@ export default function Files() {
           className="aws"
           type="primary"
           style={{ height: 150, width: 650, fontSize: "50px" }}
-          before={<FileImageOutlined style={{ marginRight: "20px" }} />}
+          before={<FileTextOutlined style={{ marginRight: "20px" }} />}
         >
           Documents
         </AwesomeButton>
@@ -35,9 +35,9 @@ export default function Files() {
           className="aws"
           type="primary"
           style={{ height: 150, width: 650, fontSize: "50px" }}
-          before={<FileTextOutlined style={{ marginRight: "20px" }} />}
+          before={<FileImageOutlined style={{ marginRight: "20px" }} />}
         >
-          Audio
+          Audios
         </AwesomeButton>
         <AwesomeButton
           className="aws"
@@ -45,7 +45,7 @@ export default function Files() {
           style={{ height: 150, width: 650, fontSize: "50px" }}
           before={<SoundOutlined style={{ marginRight: "20px" }} />}
         >
-          Image
+          Images
         </AwesomeButton>
       </div>
       {/* <AwesomeButton
