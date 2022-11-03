@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { Route } from "react-router";
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, Route, Switch, useHistory } from "react-router-dom";
 import {
   AppstoreTwoTone,
   FileAddTwoTone,
@@ -55,12 +54,17 @@ export default function App() {
         </div>
         {icon && <div className="cloud-logo"></div>}
         <div>
-          <Route exact path="/">
-            <Main></Main>
-          </Route>
-          <Route exact path="/login">
-            <Login setToken={setToken} toggleIcon={toggleIcon}></Login>
-          </Route>
+          <Switch>
+            <Route exact path="/">
+              <Main></Main>
+            </Route>
+            <Route exact path="/login">
+              <Login setToken={setToken} toggleIcon={toggleIcon}></Login>
+            </Route>
+            <Route path="*">
+              <NotFoundReturnToMain />
+            </Route>
+          </Switch>
         </div>
       </>
     );
@@ -142,11 +146,16 @@ export default function App() {
             minHeight: 280,
           }}
         >
-          <Route path="/dashboard" component={DashBoard} />
-          <Route path="/file" component={Files} />
-          <Route path="/upload" component={Uploads} />
-          <Route path="/trash" component={Trash} />
-          <Route path="/images" component={Images} />
+          <Switch>
+            <Route path="/dashboard" component={DashBoard} />
+            <Route path="/file" component={Files} />
+            <Route path="/upload" component={Uploads} />
+            <Route path="/trash" component={Trash} />
+            <Route path="/images" component={Images} />
+            <Route path="*">
+              <NoMatch />
+            </Route>
+          </Switch>
         </Content>
         <Footer
           style={{
@@ -160,4 +169,25 @@ export default function App() {
       </Layout>
     </Layout>
   );
+}
+
+function NoMatch() {
+  let location = useLocation();
+
+  return (
+    <div>
+      <h3>
+        No match for <code>{location.pathname}</code>
+      </h3>
+    </div>
+  );
+}
+
+function NotFoundReturnToMain() {
+  const history = useHistory();
+  useEffect(() => {
+    history.push("/");
+  });
+
+  return <></>;
 }
