@@ -7,15 +7,18 @@ import {
 } from "@ant-design/icons";
 import jwt from "jwt-decode";
 import { Button, Tooltip, Modal } from "antd";
+import { useHistory } from "react-router-dom";
 
 import "./UserHeader.css";
 
 export default function UserHeader({ collapse, toggle, token, setToken }) {
   const [user, setUser] = useState("");
+  const history = useHistory();
 
   const handleLogout = () => {
     localStorage.clear();
     setToken("");
+    history.push("/");
   };
 
   const confirm = () => {

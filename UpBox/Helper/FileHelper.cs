@@ -25,7 +25,7 @@ namespace UpBox.Helper
                 return Convert.ToString((FileType)2);
             }
             else if (extension == "m4a" || extension == "mp3" || extension == "wav" || extension == "flv" ||
-                extension == "AVCHD")
+                extension == "avchd")
             {
                 return Convert.ToString((FileType)3);
             }

@@ -51,3 +51,41 @@
 .ant-layout-content{
     margin: 0px 16px;
 }
+
+.cloud-logo{
+    background-image: url(/images/cloud-logo.png);
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 90px;
+    right: 50px;
+    height: 810px;
+    width: 700px;
+    -webkit-animation-duration: 3s;
+    animation-duration: 3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeRight;
+    animation-name: fadeRight;
+}
+
+@-webkit-keyframes fadeRight {
+    0% {
+       opacity: 0;
+       -webkit-transform: translateX(20px);
+    }
+    100% {
+       opacity: 1;
+       -webkit-transform: translateX(0);
+    }
+ }
+ 
+ @keyframes fadeRight {
+    0% {
+       opacity: 0;
+       transform: translateX(20px);
+    }
+    100% {
+       opacity: 1;
+       transform: translateX(0);
+    }
+ }

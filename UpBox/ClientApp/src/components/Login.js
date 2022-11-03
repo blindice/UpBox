@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 
 import "./Login.css";
 
-export default function Login({ setToken }) {
+export default function Login({ setToken, toggleIcon }) {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const login = async (value) => {
@@ -25,7 +25,7 @@ export default function Login({ setToken }) {
       }
 
       setLoading(false);
-      history.push("/");
+      history.push("/dashboard");
     } catch (err) {
       openNotification(err.message);
     }
@@ -37,6 +37,10 @@ export default function Login({ setToken }) {
       placement: "bottomRight",
     });
   };
+
+  useEffect(() => {
+    toggleIcon(false);
+  }, []);
 
   return (
     <div className="login-container">

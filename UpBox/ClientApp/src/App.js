@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Route } from "react-router";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   AppstoreTwoTone,
   FileAddTwoTone,
   DeleteTwoTone,
   FolderTwoTone,
 } from "@ant-design/icons";
-import { Layout, Menu, Spin } from "antd";
+import { Layout, Menu, Carousel } from "antd";
 
 import "./custom.css";
 import "./components/App.css";
@@ -19,12 +19,15 @@ import Uploads from "./components/Uploads";
 import Trash from "./components/Trash";
 import UserHeader from "./components/UserHeader";
 import Images from "./components/Images";
+import Main from "./components/Main";
 
 const { Header, Footer, Sider, Content } = Layout;
 
 export default function App() {
   const { token, setToken } = useToken();
+  const location = useLocation();
   const [collapse, setCollapse] = useState(false);
+  const [icon, toggleIcon] = useState(true);
 
   const onCollapse = (collapsed) => {
     setCollapse(collapsed);
@@ -34,7 +37,33 @@ export default function App() {
   };
 
   if (!token) {
-    return <Login setToken={setToken}></Login>;
+    return (
+      <>
+        <div className="home-menu">
+          <Link to="/" style={{ color: "white" }}>
+            Home
+          </Link>
+          <Link to="/login" style={{ color: "white" }}>
+            About us
+          </Link>
+          <Link to="/login" style={{ color: "white" }}>
+            Info
+          </Link>
+          <Link to="/login" style={{ color: "white" }}>
+            Login
+          </Link>
+        </div>
+        {icon && <div className="cloud-logo"></div>}
+        <div>
+          <Route exact path="/">
+            <Main></Main>
+          </Route>
+          <Route exact path="/login">
+            <Login setToken={setToken} toggleIcon={toggleIcon}></Login>
+          </Route>
+        </div>
+      </>
+    );
   }
   return (
     <Layout
@@ -68,7 +97,7 @@ export default function App() {
             className="side-menu-item"
           >
             <span>Dashboard</span>
-            <Link to="/" />
+            <Link to="/dashboard" />
           </Menu.Item>
           <Menu.Item
             key="2"
@@ -113,7 +142,7 @@ export default function App() {
             minHeight: 280,
           }}
         >
-          <Route exact path="/" component={DashBoard} />
+          <Route path="/dashboard" component={DashBoard} />
           <Route path="/file" component={Files} />
           <Route path="/upload" component={Uploads} />
           <Route path="/trash" component={Trash} />
