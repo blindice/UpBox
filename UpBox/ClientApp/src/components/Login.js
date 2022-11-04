@@ -28,6 +28,7 @@ export default function Login({ setToken, toggleIcon }) {
       history.push("/dashboard");
     } catch (err) {
       openNotification(err.message);
+      setLoading(false);
     }
   };
 

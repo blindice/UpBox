@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 
 import "./Files.css";
-import "react-awesome-button/dist/styles.css";
+// import "react-awesome-button/dist/styles.css";
 
 export default function Files() {
   const history = useHistory();

@@ -6,7 +6,7 @@ import {
   DeleteTwoTone,
   FolderTwoTone,
 } from "@ant-design/icons";
-import { Layout, Menu, Carousel } from "antd";
+import { Layout, Menu } from "antd";
 
 import "./custom.css";
 import "./components/App.css";
@@ -76,7 +76,7 @@ export default function App() {
       className="layout-container"
     >
       <Sider
-        className="side-menu"
+        className="sider-menu"
         collapsed={collapse}
         onCollapse={onCollapse}
         theme="light"
