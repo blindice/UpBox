@@ -141,7 +141,7 @@ namespace UpBox
             app.UseSpaStaticFiles();
             app.UseStaticFiles(new StaticFileOptions()
             {
-                FileProvider = new PhysicalFileProvider(@"C:\Users\Ivan\Desktop\UpBox_Files"),
+                FileProvider = new PhysicalFileProvider(Configuration.GetSection("Ftp:Server").Value),
                 RequestPath = new PathString("/Files")
             });
 
