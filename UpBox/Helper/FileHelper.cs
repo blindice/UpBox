@@ -14,8 +14,7 @@ namespace UpBox.Helper
         {
             if (extension == "pdf" || extension == "doc" || extension == "docx" || extension == "html" ||
                extension == "htm" || extension == "xls" || extension == "xlsx" || extension == "txt" ||
-               extension == "ppt " || extension == "pptx" || extension == "odp" || extension == "key" || 
-               extension == "csv")
+               extension == "ppt " || extension == "pptx" || extension == "csv")
             {
                 return Convert.ToString((FileType)1);
             }
@@ -46,8 +45,7 @@ namespace UpBox.Helper
         {
             if (extension == "pdf" || extension == "doc" || extension == "docx" || extension == "html" ||
                 extension == "htm" || extension == "xls" || extension == "xlsx" || extension == "txt" ||
-                extension == "ppt " || extension == "pptx" || extension == "odp" || extension == "key" ||
-                extension == "csv")
+                extension == "ppt " || extension == "pptx" || extension == "csv")
             {
                 return (int)FileType.Document;
             }
