@@ -85,6 +85,7 @@ export default function Videos() {
                         maxHeight: 100,
                         width: 'auto',
                         maxWidth: 200,
+                        marginLeft: '5%',
                       }}
                       controls
                     >

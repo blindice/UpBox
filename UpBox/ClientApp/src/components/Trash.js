@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import jwt from 'jwt-decode'
 import axios from 'axios'
-import { Button, message } from 'antd'
+import { Button, message, Spin } from 'antd'
 import { UndoOutlined } from '@ant-design/icons'
 
 import FileTable from './FileTable'
@@ -10,6 +10,7 @@ export default function Trash() {
   const [files, setfiles] = useState([])
   const [fileName, setFileName] = useState('')
   const [fileType, setFileType] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const handleSearch = (filename, filetype) => {
     try {
@@ -53,6 +54,7 @@ export default function Trash() {
 
   const getFiles = async () => {
     try {
+      setLoading(true)
       const token = JSON.parse(localStorage.getItem('token'))
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -67,7 +69,9 @@ export default function Trash() {
       const data = response.data.result
 
       setfiles(data)
+      setLoading(false)
     } catch (err) {
+      setLoading(false)
       message.error('Something went wrong 😭', 5)
     }
   }
@@ -137,13 +141,15 @@ export default function Trash() {
   ]
   return (
     <>
-      <h4 className="header-text">Trash</h4>
-      <FileTable
-        handleSearch={handleSearch}
-        columns={columns}
-        files={files}
-        fileName={fileName}
-      ></FileTable>
+      <Spin spinning={loading} size="large">
+        <h4 className="header-text">Trash</h4>
+        <FileTable
+          handleSearch={handleSearch}
+          columns={columns}
+          files={files}
+          fileName={fileName}
+        ></FileTable>
+      </Spin>
     </>
   )
 }

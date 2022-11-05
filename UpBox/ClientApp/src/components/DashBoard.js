@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import jwt from 'jwt-decode'
-import { Button, message } from 'antd'
+import { Button, message, Spin } from 'antd'
 import { DeleteOutlined } from '@ant-design/icons'
 
 import './DashBoard.css'
@@ -11,6 +11,7 @@ export default function DashBoard() {
   const [files, setfiles] = useState([])
   const [fileName, setFileName] = useState('')
   const [fileType, setFileType] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const handleSearch = (filename, filetype) => {
     try {
@@ -54,6 +55,7 @@ export default function DashBoard() {
 
   const getFiles = async () => {
     try {
+      setLoading(true)
       const token = JSON.parse(localStorage.getItem('token'))
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -68,7 +70,9 @@ export default function DashBoard() {
       const data = response.data.result
 
       setfiles(data)
+      setLoading(false)
     } catch (err) {
+      setLoading(false)
       message.error('Something went wrong 😭', 5)
     }
   }
@@ -139,13 +143,16 @@ export default function DashBoard() {
   ]
   return (
     <>
-      <h4 className="header-text">DashBoard</h4>
-      <FileTable
-        handleSearch={handleSearch}
-        columns={columns}
-        files={files}
-        fileName={fileName}
-      ></FileTable>
+      <Spin spinning={loading} size="large">
+        <h4 className="header-text">DashBoard</h4>
+
+        <FileTable
+          handleSearch={handleSearch}
+          columns={columns}
+          files={files}
+          fileName={fileName}
+        ></FileTable>
+      </Spin>
     </>
   )
 }

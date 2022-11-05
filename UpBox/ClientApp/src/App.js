@@ -29,6 +29,7 @@ export default function App() {
   const location = useLocation()
   const [collapse, setCollapse] = useState(false)
   const [icon, toggleIcon] = useState(true)
+  const [current, setCurrent] = useState(location.pathname)
 
   const onCollapse = (collapsed) => {
     setCollapse(collapsed)
@@ -36,6 +37,18 @@ export default function App() {
   const toggle = () => {
     setCollapse(!collapse)
   }
+
+  function handleClick(e) {
+    setCurrent(e.key)
+  }
+
+  useEffect(() => {
+    if (location) {
+      if (current !== location.pathname) {
+        setCurrent(location.pathname)
+      }
+    }
+  }, [location, current])
 
   if (!token) {
     return (
@@ -96,7 +109,7 @@ export default function App() {
           <p className="sidebar-logo">o</p>
           <p className="sidebar-logo">x</p>
         </div>
-        <Menu defaultSelectedKeys={['1']} mode="inline">
+        <Menu onClick={handleClick} selectedKeys={[current]} mode="inline">
           <Menu.Item
             key="1"
             icon={<AppstoreTwoTone />}
