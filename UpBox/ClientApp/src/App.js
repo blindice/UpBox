@@ -20,6 +20,7 @@ import UserHeader from './components/UserHeader'
 import Images from './components/Images'
 import Main from './components/Main'
 import Documents from './components/Documents'
+import Videos from './components/Videos'
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -154,6 +155,7 @@ export default function App() {
             <Route path="/trash" component={Trash} />
             <Route path="/images" component={Images} />
             <Route path="/documents" component={Documents} />
+            <Route path="/videos" component={Videos} />
             <Route path="*">
               <NoMatch />
             </Route>

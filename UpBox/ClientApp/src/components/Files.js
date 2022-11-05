@@ -26,6 +26,10 @@ export default function Files() {
           type="primary"
           style={{ height: 150, width: 650, fontSize: '50px' }}
           before={<VideoCameraOutlined style={{ marginRight: '20px' }} />}
+          onPress={() => {
+            // do a sync/async task then call `release()`
+            routeChange('/videos')
+          }}
         >
           Videos
         </AwesomeButton>

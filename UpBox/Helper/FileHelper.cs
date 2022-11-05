@@ -18,13 +18,11 @@ namespace UpBox.Helper
             {
                 return Convert.ToString((FileType)1);
             }
-            else if (extension == "mp4" || extension == "avi" || extension == "mov" || extension == "flv" ||
-                extension == "AVCHD")
+            else if (extension == "mp4" || extension == "avi" || extension == "mov" || extension == "flv" )
             {
                 return Convert.ToString((FileType)2);
             }
-            else if (extension == "m4a" || extension == "mp3" || extension == "wav" || extension == "flv" ||
-                extension == "avchd")
+            else if (extension == "m4a" || extension == "mp3" || extension == "wav" )
             {
                 return Convert.ToString((FileType)3);
             }
@@ -49,13 +47,11 @@ namespace UpBox.Helper
             {
                 return (int)FileType.Document;
             }
-            else if (extension == "mp4" || extension == "avi" || extension == "mov" || extension == "flv" ||
-                extension == "AVCHD")
+            else if (extension == "mp4" || extension == "avi" || extension == "mov" || extension == "flv")
             {
                 return (int)FileType.Video;
             }
-            else if (extension == "m4a" || extension == "mp3" || extension == "wav" || extension == "flv" ||
-                extension == "AVCHD")
+            else if (extension == "m4a" || extension == "mp3" || extension == "wav")
             {
                 return (int)FileType.Audio;
             }
