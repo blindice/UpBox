@@ -1,54 +1,55 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation, Route, Switch, useHistory } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import { Link, useLocation, Route, Switch, useHistory } from 'react-router-dom'
 import {
   AppstoreTwoTone,
   FileAddTwoTone,
   DeleteTwoTone,
   FolderTwoTone,
-} from "@ant-design/icons";
-import { Layout, Menu } from "antd";
+} from '@ant-design/icons'
+import { Layout, Menu } from 'antd'
 
-import "./custom.css";
-import "./components/App.css";
-import Login from "./components/Login";
-import useToken from "./helper/useToken";
-import DashBoard from "./components/DashBoard";
-import Files from "./components/Files";
-import Uploads from "./components/Uploads";
-import Trash from "./components/Trash";
-import UserHeader from "./components/UserHeader";
-import Images from "./components/Images";
-import Main from "./components/Main";
+import './custom.css'
+import './components/App.css'
+import Login from './components/Login'
+import useToken from './helper/useToken'
+import DashBoard from './components/DashBoard'
+import Files from './components/Files'
+import Uploads from './components/Uploads'
+import Trash from './components/Trash'
+import UserHeader from './components/UserHeader'
+import Images from './components/Images'
+import Main from './components/Main'
+import Documents from './components/Documents'
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Footer, Sider, Content } = Layout
 
 export default function App() {
-  const { token, setToken } = useToken();
-  const location = useLocation();
-  const [collapse, setCollapse] = useState(false);
-  const [icon, toggleIcon] = useState(true);
+  const { token, setToken } = useToken()
+  const location = useLocation()
+  const [collapse, setCollapse] = useState(false)
+  const [icon, toggleIcon] = useState(true)
 
   const onCollapse = (collapsed) => {
-    setCollapse(collapsed);
-  };
+    setCollapse(collapsed)
+  }
   const toggle = () => {
-    setCollapse(!collapse);
-  };
+    setCollapse(!collapse)
+  }
 
   if (!token) {
     return (
       <>
         <div className="home-menu">
-          <Link to="/" style={{ color: "white" }}>
+          <Link to="/" style={{ color: 'white' }}>
             Home
           </Link>
-          <Link to="/login" style={{ color: "white" }}>
+          <Link to="/login" style={{ color: 'white' }}>
             About us
           </Link>
-          <Link to="/login" style={{ color: "white" }}>
+          <Link to="/login" style={{ color: 'white' }}>
             Info
           </Link>
-          <Link to="/login" style={{ color: "white" }}>
+          <Link to="/login" style={{ color: 'white' }}>
             Login
           </Link>
         </div>
@@ -67,11 +68,11 @@ export default function App() {
           </Switch>
         </div>
       </>
-    );
+    )
   }
   return (
     <Layout
-      style={{ minHeight: "100vh" }}
+      style={{ minHeight: '100vh' }}
       theme="light"
       className="layout-container"
     >
@@ -84,8 +85,8 @@ export default function App() {
         <div
           className={
             collapse
-              ? "sidebar-logo-container-collapse"
-              : "sidebar-logo-container"
+              ? 'sidebar-logo-container-collapse'
+              : 'sidebar-logo-container'
           }
         >
           <p className="sidebar-logo">U</p>
@@ -94,7 +95,7 @@ export default function App() {
           <p className="sidebar-logo">o</p>
           <p className="sidebar-logo">x</p>
         </div>
-        <Menu defaultSelectedKeys={["1"]} mode="inline">
+        <Menu defaultSelectedKeys={['1']} mode="inline">
           <Menu.Item
             key="1"
             icon={<AppstoreTwoTone />}
@@ -129,8 +130,8 @@ export default function App() {
           </Menu.Item>
         </Menu>
       </Sider>
-      <Layout style={{ background: "#fff" }}>
-        <Header style={{ background: "#fff", padding: 0, paddingLeft: 10 }}>
+      <Layout style={{ background: '#fff' }}>
+        <Header style={{ background: '#fff', padding: 0, paddingLeft: 10 }}>
           <UserHeader
             collapse={collapse}
             toggle={toggle}
@@ -140,9 +141,9 @@ export default function App() {
         </Header>
         <Content
           style={{
-            margin: "0px 16px",
+            margin: '0px 16px',
             padding: 24,
-            background: "#fff",
+            background: '#fff',
             minHeight: 280,
           }}
         >
@@ -152,6 +153,7 @@ export default function App() {
             <Route path="/upload" component={Uploads} />
             <Route path="/trash" component={Trash} />
             <Route path="/images" component={Images} />
+            <Route path="/documents" component={Documents} />
             <Route path="*">
               <NoMatch />
             </Route>
@@ -159,20 +161,20 @@ export default function App() {
         </Content>
         <Footer
           style={{
-            textAlign: "center",
-            background: "#fff",
-            padding: "15px 50px",
+            textAlign: 'center',
+            background: '#fff',
+            padding: '15px 50px',
           }}
         >
           Upbox ©2022
         </Footer>
       </Layout>
     </Layout>
-  );
+  )
 }
 
 function NoMatch() {
-  let location = useLocation();
+  let location = useLocation()
 
   return (
     <div>
@@ -180,14 +182,14 @@ function NoMatch() {
         No match for <code>{location.pathname}</code>
       </h3>
     </div>
-  );
+  )
 }
 
 function NotFoundReturnToMain() {
-  const history = useHistory();
+  const history = useHistory()
   useEffect(() => {
-    history.push("/");
-  });
+    history.push('/')
+  })
 
-  return <></>;
+  return <></>
 }
