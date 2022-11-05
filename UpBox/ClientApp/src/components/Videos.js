@@ -72,8 +72,6 @@ export default function Videos() {
             return (
               <Tooltip placement="bottom" title={f.name}>
                 <Card
-                  onMouseEnter={(e) => setHover(true)}
-                  onMouseLeave={(e) => setHover(false)}
                   style={{
                     width: 200,
                     height: 200,
