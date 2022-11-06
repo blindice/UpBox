@@ -3,9 +3,7 @@ import axios from "axios";
 import { Image, Card, Tooltip, Button, message, Result } from "antd";
 import FileDownload from "js-file-download";
 
-import "./Images.css";
-
-export default function Images() {
+export default function Videos() {
   const [files, setFiles] = useState([]);
 
   const getAll = async () => {
@@ -22,17 +20,9 @@ export default function Images() {
       setFiles(
         response.data.result.filter((f) => {
           return (
-            (f.name.toLowerCase().includes(".apng") ||
-              f.name.toLowerCase().includes(".avif") ||
-              f.name.toLowerCase().includes(".gif") ||
-              f.name.toLowerCase().includes(".jpg") ||
-              f.name.toLowerCase().includes(".jpeg") ||
-              f.name.toLowerCase().includes(".jfif") ||
-              f.name.toLowerCase().includes(".pjpeg") ||
-              f.name.toLowerCase().includes(".pjp") ||
-              f.name.toLowerCase().includes(".png") ||
-              f.name.toLowerCase().includes(".svg") ||
-              f.name.toLowerCase().includes(".webp")) &&
+            (f.name.toLowerCase().includes(".mp3") ||
+              f.name.toLowerCase().includes(".m4a") ||
+              f.name.toLowerCase().includes(".wav")) &&
             !f.isDeleted
           );
         })
@@ -66,15 +56,15 @@ export default function Images() {
   if (files.length === 0) {
     return (
       <>
-        <h4 className="header-text">Images</h4>
-        <Result title="No Images Found!" style={{ marginTop: "15vh" }} />
+        <h4 className="header-text">Audios</h4>
+        <Result title="No Audios Found!" style={{ marginTop: "15vh" }} />
       </>
     );
   }
 
   return (
     <>
-      <h4 className="header-text">Images</h4>
+      <h4 className="header-text">Audios</h4>
       <div className="image-container">
         <Image.PreviewGroup>
           {files.map((f) => {
@@ -88,16 +78,30 @@ export default function Images() {
                   }}
                   hoverable
                   cover={
-                    <Image
-                      alt={f.name}
+                    <video
                       style={{
                         height: "auto",
                         maxHeight: 100,
                         width: "auto",
                         maxWidth: 200,
                       }}
-                      src={`${process.env.REACT_APP_API_URL}/Files/Image/${f.name}`}
-                    />
+                      controls
+                    >
+                      <source
+                        src={`${process.env.REACT_APP_API_URL}/Files/Audio/${f.name}`}
+                      />
+                    </video>
+
+                    // <Image
+                    //   alt={f.name}
+                    //   style={{
+                    //     height: 'auto',
+                    //     maxHeight: 100,
+                    //     width: 'auto',
+                    //     maxWidth: 200,
+                    //   }}
+                    //   src={`${process.env.REACT_APP_API_URL}/Files/Video/${f.name}`}
+                    // />
                   }
                 >
                   <Card.Meta title={f.name} />

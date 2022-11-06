@@ -1,66 +1,66 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import { Image, Card, Tooltip, Button, message, Result } from 'antd'
-import FileDownload from 'js-file-download'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Image, Card, Tooltip, Button, message, Result } from "antd";
+import FileDownload from "js-file-download";
 
 export default function Videos() {
-  const [files, setFiles] = useState([])
+  const [files, setFiles] = useState([]);
 
   const getAll = async () => {
     try {
-      const token = JSON.parse(localStorage.getItem('token'))
+      const token = JSON.parse(localStorage.getItem("token"));
       const config = {
         headers: { Authorization: `Bearer ${token}` },
-      }
+      };
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/file/getall`,
-        config,
-      )
+        config
+      );
 
       setFiles(
         response.data.result.filter((f) => {
           return (
-            (f.name.toLowerCase().includes('mp4') ||
-              f.name.toLowerCase().includes('avi') ||
-              f.name.toLowerCase().includes('mov') ||
-              f.name.toLowerCase().includes('flv')) &&
+            (f.name.toLowerCase().includes(".mp4") ||
+              f.name.toLowerCase().includes(".avi") ||
+              f.name.toLowerCase().includes(".mov") ||
+              f.name.toLowerCase().includes(".flv")) &&
             !f.isDeleted
-          )
-        }),
-      )
+          );
+        })
+      );
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   const downloadFile = async (fileName) => {
-    const token = JSON.parse(localStorage.getItem('token'))
+    const token = JSON.parse(localStorage.getItem("token"));
     const config = {
       headers: { Authorization: `Bearer ${token}` },
-      responseType: 'blob', // Important
-    }
+      responseType: "blob", // Important
+    };
     axios
       .get(
         `${process.env.REACT_APP_API_URL}/api/file/download?filename=${fileName}`,
-        config,
+        config
       )
       .then((response) => {
-        FileDownload(response.data, fileName)
+        FileDownload(response.data, fileName);
       })
-      .catch((err) => message.error('Something went wrong 😭', 5))
-  }
+      .catch((err) => message.error("Something went wrong 😭", 5));
+  };
 
   useEffect(() => {
-    getAll()
-  }, [])
+    getAll();
+  }, []);
 
   if (files.length === 0) {
     return (
       <>
         <h4 className="header-text">Videos</h4>
-        <Result title="No Videos Found!" style={{ marginTop: '15vh' }} />
+        <Result title="No Videos Found!" style={{ marginTop: "15vh" }} />
       </>
-    )
+    );
   }
 
   return (
@@ -75,17 +75,17 @@ export default function Videos() {
                   style={{
                     width: 200,
                     height: 200,
-                    textAlign: 'center',
+                    textAlign: "center",
                   }}
                   hoverable
                   cover={
                     <video
                       style={{
-                        height: 'auto',
+                        height: "auto",
                         maxHeight: 100,
-                        width: 'auto',
+                        width: "auto",
                         maxWidth: 200,
-                        marginLeft: '5%',
+                        marginLeft: "5%",
                       }}
                       controls
                     >
@@ -110,17 +110,17 @@ export default function Videos() {
                   <Button
                     type="primary"
                     size="small"
-                    style={{ marginTop: 20, width: '100%' }}
+                    style={{ marginTop: 20, width: "100%" }}
                     onClick={() => downloadFile(f.name)}
                   >
                     Download
                   </Button>
                 </Card>
               </Tooltip>
-            )
+            );
           })}
         </Image.PreviewGroup>
       </div>
     </>
-  )
+  );
 }

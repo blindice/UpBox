@@ -3,7 +3,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Form, Input, Button, notification } from "antd";
-import { useHistory } from "react-router-dom";
+import { useHistory, Switch, Route } from "react-router-dom";
 
 import "./Login.css";
 
@@ -22,11 +22,13 @@ export default function Login({ setToken, toggleIcon }) {
         setToken(data.result);
       } else {
         openNotification(data.Message);
+        history.push("/login");
       }
 
       setLoading(false);
       history.push("/dashboard");
     } catch (err) {
+      history.push("/login");
       openNotification(err.message);
       setLoading(false);
     }
