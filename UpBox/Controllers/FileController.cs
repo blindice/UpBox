@@ -126,5 +126,33 @@ namespace UpBox.Controllers
 
             return Ok(response);
         }
+
+        [HttpGet("getdiscsize")]
+        public IActionResult GetDiscSize()
+        {
+            DriveInfo dDrive = new DriveInfo("C");
+            if (dDrive.IsReady)
+            {
+                return Ok(new { totalSize = convertSize(dDrive.TotalSize), availableSize = convertSize(dDrive.AvailableFreeSpace) });
+            }
+
+            return Ok();
+        }
+
+        private String convertSize(double size)
+        {
+            String[] units = new String[] { "B", "KB", "MB", "GB", "TB", "PB" };
+
+            double mod = 1024.0;
+
+            int i = 0;
+
+            while (size >= mod)
+            {
+                size /= mod;
+                i++;
+            }
+            return Math.Round(size, 2) + units[i];//with 2 decimals
+        }
     }
 }

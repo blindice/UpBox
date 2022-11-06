@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, Route, Switch, useHistory } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  Route,
+  Switch,
+  useHistory,
+  NavLink,
+} from "react-router-dom";
 import {
   AppstoreTwoTone,
   FileAddTwoTone,
@@ -27,6 +34,7 @@ const { Header, Footer, Sider, Content } = Layout;
 
 export default function App() {
   const { token, setToken } = useToken();
+
   const location = useLocation();
   const [collapse, setCollapse] = useState(false);
   const [icon, toggleIcon] = useState(true);
@@ -55,18 +63,18 @@ export default function App() {
     return (
       <>
         <div className="home-menu">
-          <Link to="/" style={{ color: "white" }}>
+          <NavLink exact={true} to="/" style={{ color: "white" }}>
             Home
-          </Link>
-          <Link to="/login" style={{ color: "white" }}>
+          </NavLink>
+          <NavLink to="/aboutus" style={{ color: "white" }}>
             About us
-          </Link>
-          <Link to="/login" style={{ color: "white" }}>
+          </NavLink>
+          <NavLink to="/info" style={{ color: "white" }}>
             Info
-          </Link>
-          <Link to="/login" style={{ color: "white" }}>
+          </NavLink>
+          <NavLink to="/login" style={{ color: "white" }}>
             Login
-          </Link>
+          </NavLink>
         </div>
         {icon && <div className="cloud-logo"></div>}
         <div>
@@ -74,7 +82,7 @@ export default function App() {
             <Route exact path="/">
               <Main></Main>
             </Route>
-            <Route exact path="/login">
+            <Route path="/login">
               <Login setToken={setToken} toggleIcon={toggleIcon}></Login>
             </Route>
             <Route path="*">

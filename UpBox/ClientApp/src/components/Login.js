@@ -3,7 +3,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Form, Input, Button, notification } from "antd";
-import { useHistory, Switch, Route } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 
 import "./Login.css";
 
