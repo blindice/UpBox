@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { Form, Input, Button, notification } from 'antd'
-import { useHistory, Redirect } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import './Login.css'
+// import { Input } from 'reactstrap'
 
 export default function Login({ setToken, toggleIcon }) {
   const [loading, setLoading] = useState(false)
   const history = useHistory()
+  const usernameRef = useRef(null)
+
   const login = async (value) => {
     try {
       setLoading(true)
@@ -21,8 +24,6 @@ export default function Login({ setToken, toggleIcon }) {
       if (data.isSuccess) {
         setToken(data.result)
       } else {
-        // openNotification(data.Message)
-        // history.push('/login')
         throw new Error(data.Message)
       }
 
@@ -44,6 +45,7 @@ export default function Login({ setToken, toggleIcon }) {
 
   useEffect(() => {
     toggleIcon(false)
+    usernameRef.current.focus()
   })
 
   return (
@@ -62,6 +64,7 @@ export default function Login({ setToken, toggleIcon }) {
           ]}
         >
           <Input
+            ref={usernameRef}
             prefix={<UserOutlined />}
             placeholder="Username"
             size="large"
