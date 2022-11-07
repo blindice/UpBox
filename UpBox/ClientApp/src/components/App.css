@@ -17,6 +17,20 @@
   text-shadow: -1px 2px 1px rgba(39, 41, 35, 0.68);
 }
 
+@media only screen and (max-width: 1366px) {
+  .sidebar-logo-container {
+    font-size: 48px;
+    margin-bottom: 150px;
+    margin-left: 15px;
+  }
+
+  .sidebar-logo-container-collapse {
+    font-size: 24px;
+    margin-bottom: 35px;
+    font-family: 'Luckiest Guy', cursive;
+  }
+}
+
 .sidebar-logo {
   color: #1890ff;
   margin: 0;

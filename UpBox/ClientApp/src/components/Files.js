@@ -7,12 +7,18 @@ import {
   SoundOutlined,
   FileImageOutlined,
 } from '@ant-design/icons'
+import { useMediaQuery } from 'react-responsive'
 
 import './Files.css'
 // import "react-awesome-button/dist/styles.css";
 
 export default function Files() {
   const history = useHistory()
+  const isSmallScreen = useMediaQuery({ query: `(max-width: 1366px)` })
+
+  const buttonStyle = isSmallScreen
+    ? { height: 100, width: 325, fontSize: '25px' }
+    : { height: 150, width: 650, fontSize: '50px' }
 
   const routeChange = (path) => {
     history.push(path)
@@ -24,7 +30,7 @@ export default function Files() {
         <AwesomeButton
           className="aws"
           type="primary"
-          style={{ height: 150, width: 650, fontSize: '50px' }}
+          style={buttonStyle}
           before={<VideoCameraOutlined style={{ marginRight: '20px' }} />}
           onPress={() => {
             // do a sync/async task then call `release()`
@@ -36,7 +42,7 @@ export default function Files() {
         <AwesomeButton
           className="aws"
           type="primary"
-          style={{ height: 150, width: 650, fontSize: '50px' }}
+          style={buttonStyle}
           before={<FileTextOutlined style={{ marginRight: '20px' }} />}
           onPress={() => {
             // do a sync/async task then call `release()`
@@ -48,7 +54,7 @@ export default function Files() {
         <AwesomeButton
           className="aws"
           type="primary"
-          style={{ height: 150, width: 650, fontSize: '50px' }}
+          style={buttonStyle}
           before={<FileImageOutlined style={{ marginRight: '20px' }} />}
           onPress={() => {
             // do a sync/async task then call `release()`
@@ -60,7 +66,7 @@ export default function Files() {
         <AwesomeButton
           className="aws"
           type="primary"
-          style={{ height: 150, width: 650, fontSize: '50px' }}
+          style={buttonStyle}
           before={<SoundOutlined style={{ marginRight: '20px' }} />}
           onPress={() => {
             // do a sync/async task then call `release()`

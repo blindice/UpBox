@@ -21,8 +21,9 @@ export default function Login({ setToken, toggleIcon }) {
       if (data.isSuccess) {
         setToken(data.result)
       } else {
-        openNotification(data.Message)
-        history.push('/login')
+        // openNotification(data.Message)
+        // history.push('/login')
+        throw new Error(data.Message)
       }
 
       setLoading(false)
