@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
-import { AwesomeButton } from "react-awesome-button";
+import React, { useEffect } from 'react'
+import { AwesomeButton } from 'react-awesome-button'
 
-import "./Main.css";
+import './Main.css'
 
 export default function Main({ toggleIcon }) {
-  useEffect(() => {});
+  useEffect(() => {
+    toggleIcon(true)
+  })
   return (
     <>
       <div className="learn-more">
@@ -39,5 +41,5 @@ export default function Main({ toggleIcon }) {
       </div>
       <div className="cloud-logo"></div>
     </>
-  );
+  )
 }

@@ -1,22 +1,22 @@
-import React from "react";
-import { AwesomeButton } from "react-awesome-button";
-import { useHistory } from "react-router-dom";
+import React from 'react'
+import { AwesomeButton } from 'react-awesome-button'
+import { useHistory } from 'react-router-dom'
 import {
   VideoCameraOutlined,
   FileTextOutlined,
   SoundOutlined,
   FileImageOutlined,
-} from "@ant-design/icons";
+} from '@ant-design/icons'
 
-import "./Files.css";
+import './Files.css'
 // import "react-awesome-button/dist/styles.css";
 
 export default function Files() {
-  const history = useHistory();
+  const history = useHistory()
 
   const routeChange = (path) => {
-    history.push(path);
-  };
+    history.push(path)
+  }
   return (
     <>
       <h4 className="header-text">Files</h4>
@@ -24,11 +24,11 @@ export default function Files() {
         <AwesomeButton
           className="aws"
           type="primary"
-          style={{ height: 150, width: 650, fontSize: "50px" }}
-          before={<VideoCameraOutlined style={{ marginRight: "20px" }} />}
+          style={{ height: 150, width: 650, fontSize: '50px' }}
+          before={<VideoCameraOutlined style={{ marginRight: '20px' }} />}
           onPress={() => {
             // do a sync/async task then call `release()`
-            routeChange("/videos");
+            routeChange('/videos')
           }}
         >
           Videos
@@ -36,11 +36,11 @@ export default function Files() {
         <AwesomeButton
           className="aws"
           type="primary"
-          style={{ height: 150, width: 650, fontSize: "50px" }}
-          before={<FileTextOutlined style={{ marginRight: "20px" }} />}
+          style={{ height: 150, width: 650, fontSize: '50px' }}
+          before={<FileTextOutlined style={{ marginRight: '20px' }} />}
           onPress={() => {
             // do a sync/async task then call `release()`
-            routeChange("/documents");
+            routeChange('/documents')
           }}
         >
           Documents
@@ -48,11 +48,11 @@ export default function Files() {
         <AwesomeButton
           className="aws"
           type="primary"
-          style={{ height: 150, width: 650, fontSize: "50px" }}
-          before={<FileImageOutlined style={{ marginRight: "20px" }} />}
+          style={{ height: 150, width: 650, fontSize: '50px' }}
+          before={<FileImageOutlined style={{ marginRight: '20px' }} />}
           onPress={() => {
             // do a sync/async task then call `release()`
-            routeChange("/audios");
+            routeChange('/audios')
           }}
         >
           Audios
@@ -60,11 +60,11 @@ export default function Files() {
         <AwesomeButton
           className="aws"
           type="primary"
-          style={{ height: 150, width: 650, fontSize: "50px" }}
-          before={<SoundOutlined style={{ marginRight: "20px" }} />}
+          style={{ height: 150, width: 650, fontSize: '50px' }}
+          before={<SoundOutlined style={{ marginRight: '20px' }} />}
           onPress={() => {
             // do a sync/async task then call `release()`
-            routeChange("/images");
+            routeChange('/images')
           }}
         >
           Images
@@ -78,5 +78,5 @@ export default function Files() {
         Primary
       </AwesomeButton> */}
     </>
-  );
+  )
 }
