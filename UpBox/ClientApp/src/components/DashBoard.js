@@ -7,7 +7,7 @@ import { DeleteOutlined } from '@ant-design/icons'
 import './DashBoard.css'
 import FileTable from './FileTable'
 
-export default function DashBoard() {
+export default function DashBoard({ isAdmin }) {
   const [files, setfiles] = useState([])
   const [fileName, setFileName] = useState('')
   const [fileType, setFileType] = useState('')
@@ -127,7 +127,7 @@ export default function DashBoard() {
     },
     {
       title: 'Delete',
-      dataIndex: '',
+      dataIndex: 'delete',
       key: 'x',
       render: (file) => (
         <Button
@@ -150,7 +150,11 @@ export default function DashBoard() {
 
         <FileTable
           handleSearch={handleSearch}
-          columns={columns}
+          columns={
+            isAdmin
+              ? columns
+              : columns.filter((col) => col.dataIndex !== 'delete')
+          }
           files={files}
           fileName={fileName}
         ></FileTable>

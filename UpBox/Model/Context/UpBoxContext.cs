@@ -21,6 +21,7 @@ namespace UpBox.Model.Context
         public virtual DbSet<tbl_file> tbl_files { get; set; }
         public virtual DbSet<tbl_fileType> tbl_fileTypes { get; set; }
         public virtual DbSet<tbl_user> tbl_users { get; set; }
+        public virtual DbSet<tbl_userType> tbl_userTypes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -36,6 +37,10 @@ namespace UpBox.Model.Context
 
             modelBuilder.Entity<tbl_file>(entity =>
             {
+                entity.Property(e => e.LastEditedDate).HasDefaultValueSql("('0001-01-01T00:00:00.000')");
+
+                entity.Property(e => e.Path).HasDefaultValueSql("(N'')");
+
                 entity.HasOne(d => d.Type)
                     .WithMany(p => p.tbl_files)
                     .HasForeignKey(d => d.TypeId)
@@ -52,6 +57,16 @@ namespace UpBox.Model.Context
                 entity.Property(e => e.Fullname).IsUnicode(false);
 
                 entity.Property(e => e.Username).IsUnicode(false);
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.tbl_users)
+                    .HasForeignKey(d => d.RoleId)
+                    .HasConstraintName("FK_RoleId");
+            });
+
+            modelBuilder.Entity<tbl_userType>(entity =>
+            {
+                entity.Property(e => e.Role).IsUnicode(false);
             });
 
             OnModelCreatingPartial(modelBuilder);

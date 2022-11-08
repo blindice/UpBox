@@ -16,5 +16,8 @@ namespace UpBox.DTO
 
         [Required]
         public string Fullname { get; set; }
+
+        [Required]
+        public int RoleId { get; set; }
     }
 }

@@ -69,7 +69,8 @@ namespace UpBox.Service
                 Username = account.Username,
                 Password = GetHash(account.Password, salt),
                 Fullname = account.Fullname,
-                Salt = salt
+                Salt = salt,
+                RoleId = account.RoleId
             };
 
             _repo.Create(newAccount);

@@ -14,6 +14,7 @@ import {
   FolderTwoTone,
 } from '@ant-design/icons'
 import { Layout, Menu } from 'antd'
+import jwt from 'jwt-decode'
 
 import './custom.css'
 import './components/App.css'
@@ -39,6 +40,7 @@ export default function App() {
   const [collapse, setCollapse] = useState(false)
   const [icon, toggleIcon] = useState(true)
   const [current, setCurrent] = useState(location.pathname)
+  const [isAdmin, setIsAdmin] = useState(false)
 
   const onCollapse = (collapsed) => {
     setCollapse(collapsed)
@@ -57,7 +59,17 @@ export default function App() {
         setCurrent(location.pathname)
       }
     }
-  }, [location, current])
+
+    if (!token) {
+      setIsAdmin(false)
+      return
+    }
+
+    const { role } = jwt(token)
+
+    console.log(role)
+    if (role.includes('admin')) setIsAdmin(true)
+  }, [location, current, isAdmin])
 
   if (!token) {
     return (
@@ -147,6 +159,7 @@ export default function App() {
             key="3"
             icon={<FileAddTwoTone />}
             className="side-menu-item"
+            style={!isAdmin && { display: 'none' }}
           >
             <span>Upload</span>
             <Link to="/upload" />
@@ -155,6 +168,7 @@ export default function App() {
             key="4"
             icon={<DeleteTwoTone />}
             className="side-menu-item"
+            style={!isAdmin && { display: 'none' }}
           >
             <span>Trash</span>
             <Link to="/trash" />
@@ -179,7 +193,9 @@ export default function App() {
           }}
         >
           <Switch>
-            <Route path="/dashboard" component={DashBoard} />
+            <Route path="/dashboard">
+              <DashBoard isAdmin={isAdmin} />
+            </Route>
             <Route path="/file" component={Files} />
             <Route path="/upload" component={Uploads} />
             <Route path="/trash" component={Trash} />

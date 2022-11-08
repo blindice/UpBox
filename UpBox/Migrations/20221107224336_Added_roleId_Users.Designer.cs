@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UpBox.Model.Context;
 
 namespace UpBox.Migrations
 {
     [DbContext(typeof(UpBoxContext))]
-    partial class UpBoxContextModelSnapshot : ModelSnapshot
+    [Migration("20221107224336_Added_roleId_Users")]
+    partial class Added_roleId_Users
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,27 +124,7 @@ namespace UpBox.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleId");
-
                     b.ToTable("tbl_users");
-                });
-
-            modelBuilder.Entity("UpBox.Model.tbl_userType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(30)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("tbl_userTypes");
                 });
 
             modelBuilder.Entity("UpBox.Model.tbl_file", b =>
@@ -157,26 +139,9 @@ namespace UpBox.Migrations
                     b.Navigation("Type");
                 });
 
-            modelBuilder.Entity("UpBox.Model.tbl_user", b =>
-                {
-                    b.HasOne("UpBox.Model.tbl_userType", "Role")
-                        .WithMany("tbl_users")
-                        .HasForeignKey("RoleId")
-                        .HasConstraintName("FK_RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-                });
-
             modelBuilder.Entity("UpBox.Model.tbl_fileType", b =>
                 {
                     b.Navigation("tbl_files");
-                });
-
-            modelBuilder.Entity("UpBox.Model.tbl_userType", b =>
-                {
-                    b.Navigation("tbl_users");
                 });
 #pragma warning restore 612, 618
         }

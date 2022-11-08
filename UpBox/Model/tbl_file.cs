@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UpBox.Model
 {
+    [Index(nameof(TypeId), Name = "IX_tbl_files_TypeId")]
     public partial class tbl_file
     {
         [Key]
@@ -15,18 +16,18 @@ namespace UpBox.Model
         [Required]
         public string Name { get; set; }
         public long Size { get; set; }
-        [Required]
-        public string Path { get; set; }
         public int TypeId { get; set; }
         public bool IsDeleted { get; set; }
-        [Column(TypeName = "datetime")]
-        public DateTime LastEditedDate { get; set; }
         public int CreatedBy { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime CreateDate { get; set; }
         public int? UpdatedBy { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? UpdatedDate { get; set; }
+        [Required]
+        public string Path { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime LastEditedDate { get; set; }
 
         [ForeignKey(nameof(TypeId))]
         [InverseProperty(nameof(tbl_fileType.tbl_files))]

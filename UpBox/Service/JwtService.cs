@@ -31,7 +31,8 @@ namespace UpBox.Service
                     Subject = new ClaimsIdentity(new[] {
                     new Claim("id", result.Id.ToString()),
                     new Claim("username", result.Username),
-                    new Claim("name", result.Fullname)
+                    new Claim("name", result.Fullname),
+                    new Claim("role", result.Role)
                 }),
                     Expires = DateTime.UtcNow.AddDays(120),
                     Issuer = _config["Jwt:Issuer"],

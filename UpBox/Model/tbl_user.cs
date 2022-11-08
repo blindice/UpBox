@@ -18,10 +18,16 @@ namespace UpBox.Model
         [Required]
         [StringLength(128)]
         public string Password { get; set; }
-        [StringLength(100)]
-        public string Fullname { get; set; }
         [Required]
         [StringLength(128)]
         public string Salt { get; set; }
+        [Required]
+        [StringLength(100)]
+        public string Fullname { get; set; }
+        public int RoleId { get; set; }
+
+        [ForeignKey(nameof(RoleId))]
+        [InverseProperty(nameof(tbl_userType.tbl_users))]
+        public virtual tbl_userType Role { get; set; }
     }
 }

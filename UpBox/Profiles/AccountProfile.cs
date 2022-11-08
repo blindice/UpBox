@@ -12,7 +12,8 @@ namespace UpBox.Profiles
     {
         public AccountProfile()
         {
-            CreateMap<tbl_user, UserInfoDTO>().ReverseMap();
+            CreateMap<tbl_user, UserInfoDTO>()
+                .ForMember(des => des.Role, opt => opt.MapFrom(src => src.Role.Role)).ReverseMap();
         }
     }
 }

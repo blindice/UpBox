@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { Form, Input, Button, notification } from 'antd'
 import { useHistory } from 'react-router-dom'
+import jwt from 'jwt-decode'
 
 import './Login.css'
 // import { Input } from 'reactstrap'
@@ -26,6 +27,10 @@ export default function Login({ setToken, toggleIcon }) {
       } else {
         throw new Error(data.Message)
       }
+
+      const myToken = localStorage.getItem('token')
+      const payload = jwt(myToken)
+      console.log(payload)
 
       setLoading(false)
       history.push('/dashboard')
