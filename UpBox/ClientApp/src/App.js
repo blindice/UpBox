@@ -30,6 +30,7 @@ import Main from './components/Main'
 import Documents from './components/Documents'
 import Videos from './components/Videos'
 import Audios from './components/Audios'
+import About from './components/About'
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -78,7 +79,7 @@ export default function App() {
           <NavLink exact={true} to="/" style={{ color: 'white' }}>
             Home
           </NavLink>
-          <NavLink to="/aboutus" style={{ color: 'white' }}>
+          <NavLink to="/about" style={{ color: 'white' }}>
             About us
           </NavLink>
           <NavLink to="/info" style={{ color: 'white' }}>
@@ -101,6 +102,9 @@ export default function App() {
           <Switch>
             <Route exact path="/">
               <Main toggleIcon={toggleIcon}></Main>
+            </Route>
+            <Route exact path="/about">
+              <About toggleIcon={toggleIcon}></About>
             </Route>
             <Route path="/login">
               <Login setToken={setToken} toggleIcon={toggleIcon}></Login>
