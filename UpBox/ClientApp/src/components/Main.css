@@ -29,11 +29,11 @@
 
   .learn-more .cloud-description {
     text-indent: 50px;
-    font-size: 12px;
+    font-size: 15px;
   }
 
   .learn-more .cloud-title {
-    font-size: 38px;
+    font-size: 50px;
     margin-bottom: 10px;
   }
 }
@@ -67,7 +67,7 @@
 
 .cloud-description {
   text-indent: 50px;
-  font-size: 15px;
+  font-size: 25px;
 }
 
 .home-menu {
@@ -85,7 +85,7 @@
 }
 
 .cloud-title {
-  font-size: 64px;
+  font-size: 70px;
   margin-bottom: 0px;
 }
 

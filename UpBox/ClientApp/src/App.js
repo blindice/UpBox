@@ -31,6 +31,7 @@ import Documents from './components/Documents'
 import Videos from './components/Videos'
 import Audios from './components/Audios'
 import About from './components/About'
+import Info from './components/Info'
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -75,8 +76,8 @@ export default function App() {
   if (!token) {
     return (
       <>
-        <div className="home-menu">
-          <NavLink exact={true} to="/" style={{ color: 'white' }}>
+        <div className="home-menu" style={{ position: 'sticky', top: 0 }}>
+          <NavLink exact={true} to="/" style={{ color: 'white', zIndex: 1 }}>
             Home
           </NavLink>
           <NavLink to="/about" style={{ color: 'white' }}>
@@ -105,6 +106,9 @@ export default function App() {
             </Route>
             <Route exact path="/about">
               <About toggleIcon={toggleIcon}></About>
+            </Route>
+            <Route path="/info">
+              <Info toggleIcon={toggleIcon}></Info>
             </Route>
             <Route path="/login">
               <Login setToken={setToken} toggleIcon={toggleIcon}></Login>
