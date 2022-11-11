@@ -71,6 +71,9 @@ export default function Info({ toggleIcon }) {
         would be better than having disorganized information in a room where it
         would be extremely difficult to find important information needed.
       </p>
+      <br />
+      <br />
+      <br />
     </div>
   )
 }

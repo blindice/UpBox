@@ -76,8 +76,11 @@ export default function App() {
   if (!token) {
     return (
       <>
-        <div className="home-menu" style={{ position: 'sticky', top: 0 }}>
-          <NavLink exact={true} to="/" style={{ color: 'white', zIndex: 1 }}>
+        <div
+          className="home-menu"
+          style={{ position: 'sticky', top: 0, zIndex: 1000 }}
+        >
+          <NavLink exact={true} to="/" style={{ color: 'white' }}>
             Home
           </NavLink>
           <NavLink to="/about" style={{ color: 'white' }}>
