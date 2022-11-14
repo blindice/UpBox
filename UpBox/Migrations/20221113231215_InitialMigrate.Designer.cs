@@ -10,8 +10,8 @@ using UpBox.Model.Context;
 namespace UpBox.Migrations
 {
     [DbContext(typeof(UpBoxContext))]
-    [Migration("20221028013255_AddedFullNameColumnTo_tbl_user")]
-    partial class AddedFullNameColumnTo_tbl_user
+    [Migration("20221113231215_InitialMigrate")]
+    partial class InitialMigrate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,7 +39,9 @@ namespace UpBox.Migrations
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("LastEditedDate")
-                        .HasColumnType("datetime");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("('0001-01-01T00:00:00.000')");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -47,7 +49,9 @@ namespace UpBox.Migrations
 
                     b.Property<string>("Path")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValueSql("(N'')");
 
                     b.Property<long>("Size")
                         .HasColumnType("bigint");
@@ -63,7 +67,7 @@ namespace UpBox.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TypeId");
+                    b.HasIndex(new[] { "TypeId" }, "IX_tbl_files_TypeId");
 
                     b.ToTable("tbl_files");
                 });
@@ -94,6 +98,7 @@ namespace UpBox.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Fullname")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
                         .HasColumnType("varchar(100)");
@@ -102,6 +107,9 @@ namespace UpBox.Migrations
                         .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Salt")
                         .IsRequired()
@@ -116,7 +124,27 @@ namespace UpBox.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RoleId");
+
                     b.ToTable("tbl_users");
+                });
+
+            modelBuilder.Entity("UpBox.Model.tbl_userType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tbl_userTypes");
                 });
 
             modelBuilder.Entity("UpBox.Model.tbl_file", b =>
@@ -131,9 +159,26 @@ namespace UpBox.Migrations
                     b.Navigation("Type");
                 });
 
+            modelBuilder.Entity("UpBox.Model.tbl_user", b =>
+                {
+                    b.HasOne("UpBox.Model.tbl_userType", "Role")
+                        .WithMany("tbl_users")
+                        .HasForeignKey("RoleId")
+                        .HasConstraintName("FK_RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("UpBox.Model.tbl_fileType", b =>
                 {
                     b.Navigation("tbl_files");
+                });
+
+            modelBuilder.Entity("UpBox.Model.tbl_userType", b =>
+                {
+                    b.Navigation("tbl_users");
                 });
 #pragma warning restore 612, 618
         }

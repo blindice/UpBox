@@ -33,6 +33,30 @@ export default function About({ toggleIcon }) {
       }}
     >
       <div>
+        <div style={{ ...contentStyle, marginLeft: '15%' }}>
+          <h2 className="about-name">About Us</h2>
+          <p className="about-description" align="justify">
+            <br />
+            Piedmont, or mountain, glaciers are found in many parts of the
+            world. In North America they are distributed along the mountain
+            ranges of the Pacific Coast from central California northward. They
+            abound in the Andes range in South America and are familiar and
+            greatly admired spectacles in the Alps, the Pyrenees, the Caucasus
+            Mountains and the mountains of Scandanavia. Rivers of ice flow down
+            the valleys of various Asian mountain ranges, including the
+            Himalayas, the Hindu Kush, and the Karakoram and Kunlun ranges. They
+            are also a feature of the Southern Alps of New Zealand and are found
+            in the lofty mountains of New Guinea. The largest piedmont glaciers
+            are the Malaspina and Bering glaciers, both in Alaska.
+          </p>
+          {/* <img
+            className="about-image"
+            alt="asddd"
+            src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+          /> */}
+        </div>
+      </div>
+      <div>
         <div style={contentStyle}>
           <h2 className="about-name">John Doe</h2>
           <p className="about-description" align="justify">

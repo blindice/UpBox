@@ -127,7 +127,7 @@ export default function DashBoard({ isAdmin }) {
     },
     {
       title: 'Delete',
-      dataIndex: 'delete',
+      dataIndex: '',
       key: 'x',
       render: (file) => (
         <Button

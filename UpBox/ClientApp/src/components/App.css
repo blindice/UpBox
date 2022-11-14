@@ -32,6 +32,12 @@ body {
   text-shadow: -1px 2px 1px rgba(39, 41, 35, 0.68);
 }
 
+.not-found {
+  position: absolute;
+  top: 17em;
+  left: 68em;
+}
+
 @media only screen and (max-width: 1366px) {
   .sidebar-logo-container {
     font-size: 48px;
@@ -43,6 +49,11 @@ body {
     font-size: 24px;
     margin-bottom: 35px;
     font-family: 'Luckiest Guy', cursive;
+  }
+
+  .not-found {
+    top: 6em;
+    left: 44em;
   }
 }
 

@@ -13,7 +13,7 @@ import {
   DeleteTwoTone,
   FolderTwoTone,
 } from '@ant-design/icons'
-import { Layout, Menu } from 'antd'
+import { Layout, Menu, Result, Button } from 'antd'
 import jwt from 'jwt-decode'
 
 import './custom.css'
@@ -234,14 +234,20 @@ export default function App() {
 }
 
 function NoMatch() {
-  let location = useLocation()
+  const history = useHistory()
 
   return (
-    <div>
-      <h3>
-        No match for <code>{location.pathname}</code>
-      </h3>
-    </div>
+    <Result
+      className="not-found"
+      status="404"
+      title="404"
+      subTitle="Sorry, the page you visited does not exist."
+      extra={
+        <Button type="primary" onClick={() => history.push('/dashboard')}>
+          Go to DashBoard
+        </Button>
+      }
+    />
   )
 }
 
