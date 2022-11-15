@@ -17,6 +17,8 @@ namespace UpBox.Interface
 
         void Update(tbl_file entity);
 
+        void Delete(tbl_file entity);
+
         Task SaveAsync();
     }
 }

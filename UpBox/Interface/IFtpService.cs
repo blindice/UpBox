@@ -15,5 +15,7 @@ namespace UpBox.Interface
         string MoveFileToDeleteFolderAsync(string filePath);
 
         string RestoreFileAsync(string filePath);
+
+        void PermaDeleteFileAsync(string filePath);
     }
 }

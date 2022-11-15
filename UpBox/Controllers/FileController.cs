@@ -128,6 +128,7 @@ namespace UpBox.Controllers
         }
 
         [HttpGet("getdiscsize")]
+        [Authorize]
         public IActionResult GetDiscSize()
         {
             DriveInfo dDrive = new DriveInfo("C");

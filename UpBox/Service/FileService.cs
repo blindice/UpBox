@@ -107,5 +107,14 @@ namespace UpBox.Service
             return fileEntity.Name;
         }
 
+        public async Task PermaDeleteFileAsync(int id, FileUpdateDTO file)
+        {
+            var fileEntity = await _repo.GetByCondition(f => f.Id == id && f.IsDeleted).FirstOrDefaultAsync();
+
+            _ftpSvc.PermaDeleteFileAsync(fileEntity.Path);
+
+            _repo.Delete(fileEntity);
+            await _repo.SaveAsync();
+        }
     }
 }

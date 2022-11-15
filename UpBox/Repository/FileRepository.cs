@@ -23,6 +23,8 @@ namespace UpBox.Repository
 
         public void Update(tbl_file entity) => _context.tbl_files.Update(entity);
 
+        public void Delete(tbl_file entity) => _context.tbl_files.Remove(entity);
+
         public async Task SaveAsync() => await _context.SaveChangesAsync();
 
     }

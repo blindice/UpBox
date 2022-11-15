@@ -25,5 +25,7 @@ namespace UpBox.Interface
 
         Task<string> RestoreFileAsync(int id, FileUpdateDTO file);
 
+        Task PermaDeleteFileAsync(int id, FileUpdateDTO file);
+
     }
 }

@@ -90,5 +90,16 @@ namespace UpBox.Service
 
             return newFIlePath;
         }
+
+        public void PermaDeleteFileAsync(string filePath)
+        {
+            var path = Path.Combine(_config.GetSection("Ftp:Server").Value, "Trash");
+
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+
+            if (!File.Exists(filePath)) throw new FileException("File to Delete not found!");
+
+            File.Delete(filePath);
+        }
     }
 }
