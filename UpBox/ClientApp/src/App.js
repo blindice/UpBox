@@ -96,7 +96,14 @@ export default function App() {
       console.log(response.data);
     })();
     if (role.includes("admin")) setIsAdmin(true);
-  }, [location, current, isAdmin, sizes.totalSize, sizes.availableSize]);
+  }, [
+    location,
+    current,
+    isAdmin,
+    sizes.availableSize,
+    sizes.totalSize,
+    sizes.percentSize,
+  ]);
 
   const getPercentSize = (total, available) => {
     const usedSize = total - available;
@@ -265,7 +272,9 @@ export default function App() {
             <Route path="/upload">
               <Uploads setSizes={setSizes} />
             </Route>
-            <Route path="/trash" component={Trash} />
+            <Route path="/trash">
+              <Trash setSizes={setSizes} />
+            </Route>
             <Route path="/images" component={Images} />
             <Route path="/documents" component={Documents} />
             <Route path="/videos" component={Videos} />

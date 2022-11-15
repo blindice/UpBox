@@ -109,6 +109,17 @@ namespace UpBox.Controllers
             return Ok(response);
         }
 
+        [HttpPost("permadelete/{id}")]
+        [Authorize]
+        public async Task<IActionResult> PermaDelete(int? id, [FromBody] FileUpdateDTO file)
+        {
+            if (id is null || !ModelState.IsValid) return BadRequest();
+
+            await _svc.PermaDeleteFileAsync((int)id, file);
+
+            return Ok();
+        }
+
         [HttpPost("restore/{id}")]
         [Authorize]
         public async Task<IActionResult> Restore(int? id, [FromBody] FileUpdateDTO file)
