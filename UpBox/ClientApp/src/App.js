@@ -132,8 +132,8 @@ export default function App() {
     >
       <Sider
         className="sider-menu"
-        collapsed={collapse}
-        onCollapse={onCollapse}
+        // collapsed={collapse}
+        // onCollapse={onCollapse}
         theme="light"
       >
         <div
