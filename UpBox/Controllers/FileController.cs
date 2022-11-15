@@ -133,7 +133,7 @@ namespace UpBox.Controllers
             DriveInfo dDrive = new DriveInfo("C");
             if (dDrive.IsReady)
             {
-                return Ok(new { totalSize = convertSize(dDrive.TotalSize), availableSize = convertSize(dDrive.AvailableFreeSpace) });
+                return Ok(new { totalSize = dDrive.TotalSize, availableSize = dDrive.AvailableFreeSpace });
             }
 
             return Ok();

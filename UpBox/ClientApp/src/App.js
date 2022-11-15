@@ -13,8 +13,9 @@ import {
   DeleteTwoTone,
   FolderTwoTone,
 } from '@ant-design/icons'
-import { Layout, Menu, Result, Button } from 'antd'
+import { Layout, Menu, Result, Button, Progress } from 'antd'
 import jwt from 'jwt-decode'
+import axios from 'axios'
 
 import './custom.css'
 import './components/App.css'
@@ -43,6 +44,11 @@ export default function App() {
   const [icon, toggleIcon] = useState(true)
   const [current, setCurrent] = useState(location.pathname)
   const [isAdmin, setIsAdmin] = useState(false)
+  const [sizes, setSizes] = useState({
+    totalSize: '',
+    availableSize: '',
+    percentSize: 0,
+  })
 
   const onCollapse = (collapsed) => {
     setCollapse(collapsed)
@@ -68,10 +74,47 @@ export default function App() {
     }
 
     const { role } = jwt(token)
+    ;(async () => {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/file/getdiscsize`,
+      )
+      const sizesData = response.data
 
-    console.log(role)
+      setSizes({
+        totalSize: convertSize(sizesData.totalSize),
+        availableSize: convertSize(sizesData.availableSize),
+        percentSize: getPercentSize(
+          sizesData.totalSize,
+          sizesData.availableSize,
+        ),
+      })
+      console.log(response.data)
+    })()
     if (role.includes('admin')) setIsAdmin(true)
-  }, [location, current, isAdmin])
+    // const token = JSON.parse(localStorage.getItem('token'))
+    //   const config = {
+    //     headers: { Authorization: `Bearer ${token}` },
+    //     params: { fileName: fileName, filetype: fileType, isDeleted: false },
+    //   }
+  }, [location, current, isAdmin, sizes.totalSize, sizes.availableSize])
+
+  const getPercentSize = (total, available) => {
+    const usedSize = total - available
+
+    return ((usedSize / total) * 100).toFixed(2)
+  }
+
+  const convertSize = (size) => {
+    if (!+size) return '0 Bytes'
+
+    const k = 1024
+    const dm = 2 < 0 ? 0 : 2
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
+    const i = Math.floor(Math.log(size) / Math.log(k))
+
+    return `${parseFloat((size / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+  }
 
   if (!token) {
     return (
@@ -185,6 +228,17 @@ export default function App() {
             <Link to="/trash" />
           </Menu.Item>
         </Menu>
+
+        <div className="storage-container">
+          <Progress
+            type="circle"
+            percent={sizes.percentSize}
+            status="active"
+            width={80}
+            style={{ marginLeft: '2.5em' }}
+          />
+          <p className="size-gauge">{` ${sizes.availableSize} free of ${sizes.totalSize}`}</p>
+        </div>
       </Sider>
       <Layout style={{ background: '#fff' }}>
         <Header style={{ background: '#fff', padding: 0, paddingLeft: 10 }}>
@@ -208,7 +262,9 @@ export default function App() {
               <DashBoard isAdmin={isAdmin} />
             </Route>
             <Route path="/file" component={Files} />
-            <Route path="/upload" component={Uploads} />
+            <Route path="/upload">
+              <Uploads setSizes={setSizes} />
+            </Route>
             <Route path="/trash" component={Trash} />
             <Route path="/images" component={Images} />
             <Route path="/documents" component={Documents} />

@@ -38,6 +38,18 @@ body {
   left: 68em;
 }
 
+.storage-container {
+  position: relative;
+  bottom: -320px;
+  left: 1em;
+}
+
+.size-gauge {
+  font-weight: bold;
+  margin-left: -0.3em;
+  font-size: 13px;
+}
+
 @media only screen and (max-width: 1366px) {
   .sidebar-logo-container {
     font-size: 48px;
@@ -54,6 +66,17 @@ body {
   .not-found {
     top: 6em;
     left: 44em;
+  }
+
+  .storage-container {
+    position: relative;
+    bottom: -135px;
+    left: 1em;
+  }
+
+  .size-gauge {
+    font-size: 10px;
+    margin-left: 1.2em;
   }
 }
 

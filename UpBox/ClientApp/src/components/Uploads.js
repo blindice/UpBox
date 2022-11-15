@@ -2,14 +2,33 @@ import React, { useState } from 'react'
 import { InboxOutlined } from '@ant-design/icons'
 import { message, Upload } from 'antd'
 import jwt from 'jwt-decode'
+import axios from 'axios'
 
 import './Uploads.css'
 
 const { Dragger } = Upload
 
-export default function Uploads() {
+export default function Uploads({ setSizes }) {
   const token = JSON.parse(localStorage.getItem('token'))
   const user = jwt(token)
+
+  const getPercentSize = (total, available) => {
+    const usedSize = total - available
+
+    return ((usedSize / total) * 100).toFixed(2)
+  }
+
+  const convertSize = (size) => {
+    if (!+size) return '0 Bytes'
+
+    const k = 1024
+    const dm = 2 < 0 ? 0 : 2
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
+    const i = Math.floor(Math.log(size) / Math.log(k))
+
+    return `${parseFloat((size / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+  }
 
   const props = {
     name: 'file',
@@ -38,6 +57,22 @@ export default function Uploads() {
         }
 
         if (status === 'done') {
+          ;(async () => {
+            const response = await axios.get(
+              `${process.env.REACT_APP_API_URL}/api/file/getdiscsize`,
+            )
+            const sizesData = response.data
+
+            setSizes({
+              totalSize: convertSize(sizesData.totalSize),
+              availableSize: convertSize(sizesData.availableSize),
+              percentSize: getPercentSize(
+                sizesData.totalSize,
+                sizesData.availableSize,
+              ),
+            })
+            console.log(response.data)
+          })()
           message.success(`${info.file.name} file upload success 😊 `, 2)
         } else if (status === 'error') {
           message.error(
