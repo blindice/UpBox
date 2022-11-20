@@ -40,7 +40,7 @@
     "extends": "react-app"
   },
   "scripts": {
-    "start": "rimraf ./build && env-cmd -f dev.env react-scripts start",
+    "start": "SET NODE_OPTIONS=--openssl-legacy-provider && rimraf ./build && env-cmd -f dev.env react-scripts start",
     "build": "env-cmd -f .env react-scripts build",
     "test": "cross-env CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
