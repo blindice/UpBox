@@ -6,6 +6,11 @@
   color: whitesmoke;
 }
 
+.upbox-icon-login{
+  height: 50px;
+  width: 50px;
+}
+
 .login-form {
   width: 300px;
 }

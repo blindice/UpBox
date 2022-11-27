@@ -13,7 +13,7 @@ import {
   DeleteTwoTone,
   FolderTwoTone,
 } from "@ant-design/icons";
-import { Layout, Menu, Result, Button, Progress } from "antd";
+import { Layout, Menu, Result, Button, Progress, Image } from "antd";
 import jwt from "jwt-decode";
 import axios from "axios";
 
@@ -186,7 +186,7 @@ export default function App() {
         // onCollapse={onCollapse}
         theme="light"
       >
-        <div
+        {/* <div
           className={
             collapse
               ? "sidebar-logo-container-collapse"
@@ -198,7 +198,8 @@ export default function App() {
           <p className="sidebar-logo">B</p>
           <p className="sidebar-logo">o</p>
           <p className="sidebar-logo">x</p>
-        </div>
+        </div> */}
+        <img src="/images/upbox-icon.png" className="upbox-icon-main"></img>
         <Menu onClick={handleClick} selectedKeys={[current]} mode="inline">
           <Menu.Item
             key="1"
