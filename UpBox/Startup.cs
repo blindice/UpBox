@@ -41,7 +41,7 @@ namespace UpBox
                 options.AddPolicy(name: "AllowOrigin",
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:883", "https://localhost:4433", "http://localhost:3000")
+                        builder.WithOrigins("http://localhost:883", "https://localhost:4433", "http://localhost:3000", "http://blindice-001-site1.atempurl.com")
                                             .AllowAnyHeader()
                                             .AllowAnyMethod();
                     });
